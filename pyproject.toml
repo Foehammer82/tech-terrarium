@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "sandbox"
+version = "0.1.0"
+description = ""
+authors = ["Foehammer82 <blakej42@live.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+confluent-kafka = {extras = ["avro"], version = "^2.4.0"}
+pydantic = "^2.7.1"
+jupyter = "^1.0.0"
+pyarrow = {version = ">16", extras = ["avro"]}
+fastapi = "^0.111.0"
+uvicorn = "^0.29.0"
+loguru = "^0.7.2"
+py-avro-schema = "^3.6.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

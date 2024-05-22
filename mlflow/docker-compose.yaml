@@ -1,0 +1,7 @@
+services:
+  tracking-server:
+    image: ghcr.io/mlflow/mlflow:v2.13.0
+    restart: on-failure
+    command: mlflow server --host 0.0.0.0 --port 8087
+    ports:
+      - "8087:8087"
