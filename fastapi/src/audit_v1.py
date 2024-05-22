@@ -9,49 +9,59 @@ from pydantic import BaseModel, Field
 from starlette.types import ASGIApp, Scope, Receive, Send, Message
 
 
-class AuditRequest(BaseModel):
-    """Audit request model."""
-
-    uuid: UUID = Field(default_factory=uuid4)
-    type: str
-    asgi: Dict[str, str]
-    http_version: str
-    server: Tuple[str, int]
-    client: Tuple[str, int]
-    scheme: str
-    root_path: str
-    headers: Dict[str, str]
-    method: str
-    path: str
-    query_string: str
-
-
-class AuditResponse(BaseModel):
-    """Audit response model."""
-
-    request_uuid: UUID
-    body: str
-    headers: Dict[str, str]
-    status_code: int
-
-class Auditor:
-
-
 class AuditMiddleware:
+    # noinspection PyUnresolvedReferences
     """
     Middleware for auditing requests and responses.
 
     This middleware logs the processing time of each request and response,
     and adds it as a custom header to the response.
+
+    Examples:
+        >>> from fastapi import FastAPI
+        ... from audit import AuditMiddleware
+        ...
+        ... app = FastAPI()
+        ... app.add_middleware(
+        ...     AuditMiddleware,
+        ...     kafka_brokers="localhost:9092",
+        ...     schema_registry_url="http://localhost:8081",
+        ...     request_audit_topic="request-audit",
+        ...     response_audit_topic="response-audit",
+        ... )
     """
+
+    class AuditRequest(BaseModel):
+        """Audit request model."""
+
+        uuid: UUID = Field(default_factory=uuid4)
+        type: str
+        asgi: Dict[str, str]
+        http_version: str
+        server: Tuple[str, int]
+        client: Tuple[str, int]
+        scheme: str
+        root_path: str
+        headers: Dict[str, str]
+        method: str
+        path: str
+        query_string: str
+
+    class AuditResponse(BaseModel):
+        """Audit response model."""
+
+        request_uuid: UUID
+        body: str
+        headers: Dict[str, str]
+        status_code: int
 
     def __init__(
         self,
         app: ASGIApp,
-        brokers: str | list[str],
-        schema_registry_url: str,
         request_audit_topic: str,
         response_audit_topic: str,
+        kafka_brokers: str | list[str],
+        schema_registry_url: str | None = None,
         disabled: bool = False,
     ) -> None:
         """
@@ -59,7 +69,7 @@ class AuditMiddleware:
 
         Args:
             app: The ASGI application to wrap.
-            brokers: The Kafka broker(s) to connect to.
+            kafka_brokers: The Kafka broker(s) to connect to.
             schema_registry_url: The URL of the Kafka schema registry.
             request_audit_topic: The Kafka topic to send request audits to.
             response_audit_topic: The Kafka topic to send response audits to.
@@ -68,32 +78,17 @@ class AuditMiddleware:
         self._app = app
         self._disabled = disabled
         self._request_audit_topic = request_audit_topic
+        self._request_schema = avro.loads(py_avro_schema.generate(self.AuditRequest))
         self._response_audit_topic = response_audit_topic
+        self._response_schema = avro.loads(py_avro_schema.generate(self.AuditResponse))
 
-        request_value_schema = avro.loads(py_avro_schema.generate(AuditRequest))
-        response_value_schema = avro.loads(py_avro_schema.generate(AuditResponse))
-
-        self._request_avro_producer = (
-            AvroProducer(
-                config={
-                    "bootstrap.servers": brokers,
-                    "schema.registry.url": schema_registry_url,
-                },
-                default_value_schema=request_value_schema,
-            )
-            if not disabled
-            else None
-        )
-        self._response_avro_producer = (
-            AvroProducer(
-                config={
-                    "bootstrap.servers": brokers,
-                    "schema.registry.url": schema_registry_url,
-                },
-                default_value_schema=response_value_schema,
-            )
-            if not disabled
-            else None
+        # TODO: testing out using a single producer and topic for both request and response audits.  will need to see
+        #       if it works as expected with the schema registry
+        self._kafka_producer = AvroProducer(
+            config={
+                "bootstrap.servers": kafka_brokers,
+                "schema.registry.url": schema_registry_url,
+            }
         )
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
@@ -111,7 +106,7 @@ class AuditMiddleware:
                 (key.decode(), value.decode()) for key, value in scope["headers"]
             ]
 
-            request = AuditRequest.model_validate(scope_cleaned)
+            request = self.AuditRequest.model_validate(scope_cleaned)
             audit_request_thread = threading.Thread(
                 target=self._do_request_audit, args=[request]
             )
@@ -154,10 +149,12 @@ class AuditMiddleware:
         This method is intended to be run in a separate thread.
         """
 
-        self._request_avro_producer.produce(
-            topic=self._request_audit_topic, value=request.dict()
+        self._kafka_producer.produce(
+            topic=self._request_audit_topic,
+            value=request.dict(),
+            key_schema=request.avro_schema,
         )
-        self._request_avro_producer.flush()
+        self._kafka_producer.flush()
 
     def _do_response_audit(
         self,
@@ -172,19 +169,23 @@ class AuditMiddleware:
         This method is intended to be run in a separate thread.
         """
 
-        self._response_avro_producer.produce(
-            topic=self._response_audit_topic,
-            value=AuditResponse(
-                request_uuid=request_uuid,
-                body=body,
-                status_code=status_code,
-                headers={header[0]: header[1] for header in headers},
-            ).dict(),
+        response = self.AuditResponse(
+            request_uuid=request_uuid,
+            body=body,
+            status_code=status_code,
+            headers={header[0]: header[1] for header in headers},
         )
-        self._response_avro_producer.flush()
+        self._kafka_producer.produce(
+            topic=self._response_audit_topic,
+            value=response.dict(),
+            key_schema=response.avro_schema,
+        )
+        self._kafka_producer.flush()
 
 
 if __name__ == "__main__":
+
+
     # TODO: move to tests to assert these work
     t1 = avro.loads(py_avro_schema.generate(AuditRequest))
     t2 = avro.loads(py_avro_schema.generate(AuditResponse))
