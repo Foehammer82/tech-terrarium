@@ -1,3 +1,4 @@
+import functools
 from uuid import uuid4
 
 from fastapi import FastAPI
@@ -6,7 +7,11 @@ from audit_v2 import auditor
 from models import Foo
 
 app = FastAPI()
-auditor.initialize_middleware(app)
+auditor.initialize_middleware(
+    app,
+    request_audit_topic="requests",
+    response_audit_topic="responses",
+)
 
 
 @app.get("/foo")
