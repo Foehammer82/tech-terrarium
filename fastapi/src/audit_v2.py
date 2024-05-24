@@ -125,6 +125,10 @@ class Auditor:
         if not isinstance(audit_data, BaseModel):
             raise ValueError("audit_data must be an instance of pydantic.BaseModel")
 
+        # TODO: CONSIDERATION: need to setup some rigorous testing on this to see how it handles being hit heavily from
+        #                      async calls (will also want to adapt this to run async as well)  might need to setup a
+        #                      queue, or maybe just need to produce asynchrously and let the kafka producer handle the
+        #                      rest.  take a look at: https://www.confluent.io/blog/kafka-python-asyncio-integration/
         # run the audit in a separate thread, so we can get back to the task at hand ASAP
         audit_request_thread = threading.Thread(target=self._do_audit, args=[audit_data, kafka_topic])
         audit_request_thread.start()
