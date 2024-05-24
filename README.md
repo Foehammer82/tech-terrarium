@@ -84,7 +84,7 @@ graph LR
 ## Dropped Services
 
 - Trino
-    - Reason: it's been giving me nothing but challenges and didn't just work out of the box with kafka, which was its
-      whole point. will take a look at using flink next for stream processing. Definatly a nice tool, but the given the
-      overhead of setting it up, it's not worth it for this project, and would be a tough to consider pushing for in an
-      enterprise environment without a clear need (don't need a solution looking for a problem).
+    - Reason: it's been giving me nothing but challenges and didn't just work out of the box with kafka, which was a
+      main goal for me. will take a look at using flink next for stream processing. Definatly a nice tool, but the
+      given the overhead of setting it up, it's not worth it for this project, and would be a tough to consider
+      pushing for in an enterprise environment without a clear need (don't need a solution looking for a problem).
