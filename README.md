@@ -9,7 +9,8 @@ to deployment, but the idea is that any Python app here could be re-written in a
 
 ## TODO
 
-- [ ] set up an mkdocs site to document the terrarium
+- [ ] set up a mkdocs site to document the terrarium
+    - add mermaid diagram(s) of the services in the project showing how they interact with each other
 - [ ] add pre-commit checks to the project
 - [ ] set up the FastAPI to utilize redis caching so that we can see data moving into redis and then utilize that data
   elsewhere

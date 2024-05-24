@@ -1,6 +1,7 @@
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.6.1
+    restart: on-failure
     hostname: zookeeper
     container_name: zookeeper
     ports:
@@ -15,6 +16,7 @@ services:
 
   broker:
     image: confluentinc/cp-server:7.6.1
+    restart: on-failure
     hostname: broker
     container_name: broker
     depends_on:
@@ -49,6 +51,7 @@ services:
 
   schema-registry:
     image: confluentinc/cp-schema-registry:7.6.1
+    restart: on-failure
     hostname: schema-registry
     container_name: schema-registry
     depends_on:
@@ -65,6 +68,7 @@ services:
 
   connect:
     image: cnfldemos/cp-server-connect-datagen:0.6.4-7.6.0
+    restart: on-failure
     hostname: connect
     container_name: connect
     depends_on:
@@ -97,6 +101,7 @@ services:
 
   control-center:
     image: confluentinc/cp-enterprise-control-center:7.6.1
+    restart: on-failure
     hostname: control-center
     container_name: control-center
     depends_on:
@@ -122,6 +127,7 @@ services:
 
   ksqldb-server:
     image: confluentinc/cp-ksqldb-server:7.6.1
+    restart: on-failure
     hostname: ksqldb-server
     container_name: ksqldb-server
     depends_on:
@@ -147,6 +153,7 @@ services:
 
   ksqldb-cli:
     image: confluentinc/cp-ksqldb-cli:7.6.1
+    restart: on-failure
     container_name: ksqldb-cli
     depends_on:
       - broker
@@ -159,6 +166,7 @@ services:
 
   ksql-datagen:
     image: confluentinc/ksqldb-examples:7.6.1
+    restart: on-failure
     hostname: ksql-datagen
     container_name: ksql-datagen
     depends_on:
@@ -183,6 +191,7 @@ services:
 
   rest-proxy:
     image: confluentinc/cp-kafka-rest:7.6.1
+    restart: on-failure
     depends_on:
       - broker
       - schema-registry
