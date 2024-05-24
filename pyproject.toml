@@ -14,11 +14,18 @@ pyarrow = {version = ">16", extras = ["avro"]}
 fastapi = "^0.111.0"
 uvicorn = "^0.29.0"
 loguru = "^0.7.2"
-py-avro-schema = "^3.6.0"
+py-avro-schema = "^3"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
 
+[tool.poetry.group.test.dependencies]
+pytest = "^8.2.1"
+pytest-asyncio = "^0.23.5.post1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
