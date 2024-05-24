@@ -3,6 +3,9 @@ services:
     image: metabase/metabase:v0.49.11
     ports:
       - "3000:3000"
+    networks:
+      - metabase
+      - terrarium
     environment:
       MB_DB_TYPE: postgres
       MB_DB_DBNAME: metabase
@@ -18,3 +21,10 @@ services:
       POSTGRES_USER: metabase
       POSTGRES_PASSWORD: metabase
       POSTGRES_DB: metabase
+    networks:
+      - metabase
+
+networks:
+  metabase:
+  terrarium:
+    name: terrarium
