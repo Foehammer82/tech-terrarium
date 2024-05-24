@@ -7,6 +7,35 @@ various tools and technologies.
 There are some coded applications within this environment, we chose to implement them in Python for simplicity and speed
 to deployment, but the idea is that any Python app here could be re-written in another language.
 
+```mermaid
+graph LR
+    A[FastAPI] -->|Interacts with| B[Redis]
+    A -->|Interacts with| C[gRPC Service]
+    A -->|Interacts with| D[Kafka]
+    D -->|Interacts with| E[PostgreSQL Sink]
+    E -->|Ingests data into| L[PostgreSQL]
+    D -->|Interacts with| F[GitHub Source]
+    D -->|Interacts with| G[Flink]
+    D -->|Interacts with| H[Spark]
+    I[MongoDB] -->|Interacts with| J[Mongo Express]
+    K[Metabase] -->|Interacts with| L
+    O[Airflow] -->|Orchestrates| P[DBT]
+    P -->|Operates on| L
+    Q[DataHub / OpenMetadata] -->|Tracks metadata of| B
+    Q -->|Tracks metadata of| I
+    Q -->|Tracks metadata of| L
+    Q -->|Tracks metadata of| K
+    Q -->|Tracks metadata of| O
+    Q -->|Tracks metadata of| T[MlFlow]
+    Q -->|Tracks metadata of| H
+    Q -->|Tracks metadata of| E
+    T -->|Builds and releases models| U[Feast]
+    U -->|Uses for offline feature store| L
+    U -->|Uses for online feature store| B
+```
+
+> NOTE: This Mermaid diagram was generated with the help of Copilot 😊
+
 ## TODO
 
 - [ ] set up a mkdocs site to document the terrarium
