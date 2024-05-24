@@ -9,12 +9,31 @@ services:
       POSTGRES_DB: postgres
     ports:
       - "5432:5432"
+    networks:
+      - postgres
+      - terrarium
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: on-failure
+    ports:
+      - "8888:80"
+    networks:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@nowhere.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+      - ./servers.json:/pgadmin4/servers.json
+
 volumes:
   postgres-data:
+  pgadmin-data:
 
 networks:
-  sandbox:
-    name: sandbox
+  postgres:
+  terrarium:
+    name: terrarium
