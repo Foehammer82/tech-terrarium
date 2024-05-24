@@ -1,10 +1,15 @@
-import functools
 from uuid import uuid4
 
 from fastapi import FastAPI
 
-from audit_v2 import auditor
+from audit import Auditor
 from models import Foo
+
+auditor = Auditor(
+    kafka_brokers="localhost:9092",
+    schema_registry_url="http://localhost:8081",
+    dead_letter_topic="dead-letter",
+)
 
 app = FastAPI()
 auditor.initialize_middleware(

@@ -9,16 +9,19 @@ to deployment, but the idea is that any Python app here could be re-written in a
 
 ```mermaid
 graph LR
-    A[FastAPI] -->|Interacts with| B[Redis]
-    A -->|Interacts with| C[gRPC Service]
+    A[FastAPI] -->|Caches Data To| B[Redis]
+    A -->|Interacts with| C[gRPC Service / Remote Functions]
     A -->|Interacts with| D[Kafka]
-    D -->|Interacts with| E[PostgreSQL Sink]
+    F[GitHub Source Connector] -->|Feeds Data To| D
+    D -->|Interacts with| E[PostgreSQL Sink Connector]
     E -->|Ingests data into| L[PostgreSQL]
-    D -->|Interacts with| F[GitHub Source]
-    D -->|Interacts with| G[Flink]
-    D -->|Interacts with| H[Spark]
-    I[MongoDB] -->|Interacts with| J[Mongo Express]
-    K[Metabase] -->|Interacts with| L
+    U -->|Offline Feature Store| L
+    L -->|Admin Web Interface| M[pgAdmin]
+    A -->|Interacts with| G
+    D -->|Stateful Computations With| G[Flink]
+    L -->|Data Analytics Source For| K[Metabase]
+    I[MongoDB] -->|Admin Web Interface| J[Mongo Express]
+    I -->|Data Analytics Source For| K
     O[Airflow] -->|Orchestrates| P[DBT]
     P -->|Operates on| L
     Q[DataHub / OpenMetadata] -->|Tracks metadata of| B
@@ -27,11 +30,12 @@ graph LR
     Q -->|Tracks metadata of| K
     Q -->|Tracks metadata of| O
     Q -->|Tracks metadata of| T[MlFlow]
-    Q -->|Tracks metadata of| H
     Q -->|Tracks metadata of| E
-    T -->|Builds and releases models| U[Feast]
-    U -->|Uses for offline feature store| L
-    U -->|Uses for online feature store| B
+    Q -->|Tracks metadata of| D
+    Q -->|Tracks metadata of| P
+    Q -->|Tracks metadata of| U
+    T -->|Feature Store| U[Feast]
+    U -->|Online Feature Store| B
 ```
 
 > NOTE: This Mermaid diagram was generated with the help of Copilot 😊
