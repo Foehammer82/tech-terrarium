@@ -40,6 +40,14 @@ graph LR
 
 > NOTE: This Mermaid diagram was generated with the help of Copilot 😊
 
+## Usage
+
+TODO: Add usage instructions (makefile and manual running and whatnot)
+
+## Services
+
+TODO: make subsections for each service here
+
 ## TODO
 
 - [ ] set up a mkdocs site to document the terrarium
