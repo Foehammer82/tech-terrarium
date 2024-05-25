@@ -31,7 +31,8 @@ from starlette.requests import Request
 #         data structures, but for more complex data structures, it may be better to just use json.  even with the loss
 #         of speed.  it might be nice to use this to build the starlette middleware to use avro and the default
 #         auditing to use json, and possibly move away from subclassing BaseModel to AuditBaseModel and just use
-#         BaseModel.  then have the BaseModel checked for serialization at start of auditing.
+#         BaseModel.  then have the BaseModel checked for serialization at start of auditing.  I also just need this
+#         to work soon so i can move onto the rest of standing up the terrarium.
 
 
 class AuditBaseModel(BaseModel, abc.ABC):

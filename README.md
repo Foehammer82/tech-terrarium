@@ -10,7 +10,6 @@ to deployment, but the idea is that any Python app here could be re-written in a
 ```mermaid
 graph LR
     A[FastAPI] -->|Caches Data To| B[Redis]
-    A -->|Interacts with| C[gRPC Service / Remote Functions]
     A -->|Interacts with| D[Kafka]
     F[GitHub Source Connector] -->|Feeds Data To| D
     D -->|Interacts with| E[PostgreSQL Sink Connector]
