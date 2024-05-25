@@ -1,6 +1,6 @@
 import abc
 import threading
-from typing import Dict, Tuple, Any, Union, Optional
+from typing import Dict, Any, Optional
 from uuid import UUID, uuid4
 
 import orjson
@@ -25,10 +25,22 @@ from starlette.requests import Request
 # console_handler.setLevel(logging.DEBUG)
 # logger.addHandler(console_handler)
 
+# TODO: make it optional to use avro or json serialization and switch to json.
+#       - lesson learned: avro may be fast, but is not very flexible and may end up creating more challenges down the
+#         road for auditing.  since we end up using json in avro for nested dicts anyway.  Avro is great if for simple
+#         data structures, but for more complex data structures, it may be better to just use json.  even with the loss
+#         of speed.  it might be nice to use this to build the starlette middleware to use avro and the default
+#         auditing to use json, and possibly move away from subclassing BaseModel to AuditBaseModel and just use
+#         BaseModel.  then have the BaseModel checked for serialization at start of auditing.
+
 
 class AuditBaseModel(BaseModel, abc.ABC):
+    # TODO: add validation check for no Tuple's or Unions.
+    # TODO: review and make sure all types adhere to Avro types
+    #       https://avro.apache.org/docs/1.11.1/specification/#primitive-types
+
     _audit_uuid = PrivateAttr(default_factory=uuid4)
-    _avro_schema: str
+    _avro_schema: str = None
 
     @property
     def audit_uuid(self):
@@ -42,9 +54,17 @@ class AuditBaseModel(BaseModel, abc.ABC):
         """
         return self._audit_uuid
 
-    @property
-    def avro_schema(self):
-        return self._avro_schema
+    @classmethod
+    def get_avro_schema(cls):
+        return py_avro_schema.generate(cls).decode()
+
+    def avro_dict(self):
+        dict = self.dict()
+
+        if all([type(k) is str for k in dict.items()]):
+
+
+        return {k: v if (type(v) is Dict[str, Any]) else orjson.dumps(v) for k, v in self.dict().items()}
 
     @model_validator(mode="before")
     @classmethod
@@ -57,38 +77,6 @@ class AuditBaseModel(BaseModel, abc.ABC):
         return data
 
 
-class _HttpAuditRequest(BaseModel):
-    """Audit request model."""
-
-    uuid: UUID = Field(default_factory=uuid4)
-    type: str
-    asgi: Dict[str, str]
-    http_version: str
-    server: Tuple[str, int]
-    client: Tuple[str, int]
-    scheme: str
-    root_path: str
-    headers: Dict[str, str]
-    method: str
-    path: str
-    query_string: str
-
-    @classmethod
-    def from_request(cls, request: Request) -> "_HttpAuditRequest":
-        request_dict = dict(request)
-        request_dict["headers"] = {h[0].decode(): h[1].decode() for h in request.headers.raw}
-        return cls(**request_dict)
-
-
-class _HttpAuditResponse(BaseModel):
-    """Audit response model."""
-
-    request_uuid: UUID
-    body: Union[Dict[str, Any], str]
-    headers: Dict[str, str]
-    status_code: int
-
-
 class Auditor:
     # TODO: configure a timer or scheduler to reprocess audit messages on the retry-topic
     _kafka_dead_letter_producer: Optional[Producer] = None
@@ -97,14 +85,14 @@ class Auditor:
         self,
         kafka_brokers: str | list[str],
         schema_registry_url: str,
-        schema_registry_default_models: list[BaseModel] = None,
+        schema_registry_default_models: list[AuditBaseModel] = None,
         retry_topic: str | None = None,
         dead_letter_topic: str | None = None,
     ):
         # store the Avro serializers for the default models in the schema registry
         self._schema_registry_url = schema_registry_url
-        self.schema_registry_models: dict[BaseModel.__class__, AvroSerializer] = (
-            {model.__class__: self._get_avro_serializer(model) for model in schema_registry_default_models}
+        self._schema_registry_models: dict[AuditBaseModel.__class__.__name__, AvroSerializer] = (
+            {model.__class__.__name__: self._get_avro_serializer(model) for model in schema_registry_default_models}
             if schema_registry_default_models
             else {}
         )
@@ -128,52 +116,11 @@ class Auditor:
         else:
             logger.warning("No dead-letter topic configured, messages that fail to be delivered will be lost.")
 
-    def initialize_middleware(
-        self,
-        app: FastAPI,
-        request_audit_topic: str,
-        response_audit_topic: str,
-    ):
-        # TODO: get the response audit working
-        logger.debug(f"Current Thread: {threading.current_thread()}")
-
-        # Generate the Avro schemas for the audit models and store them in the schema registry
-        self.schema_registry_models[_HttpAuditRequest.__class__] = self._get_avro_serializer(_HttpAuditRequest)
-        self.schema_registry_models[_HttpAuditResponse.__class__] = self._get_avro_serializer(_HttpAuditResponse)
-
-        # Add middleware to the FastAPI app to audit requests and responses
-        @app.middleware("http")
-        async def audit_request_and_response(request: Request, call_next):
-            audit_request_model = _HttpAuditRequest.from_request(request)
-            self.audit(
-                audit_data=audit_request_model,
-                kafka_topic=request_audit_topic,
-            )
-
-            response = await call_next(request)
-
-            # get the response headers as a dict of strings
-            response_headers = {h[0].decode(): h[1].decode() for h in response.headers.raw}
-
-            # Obtain the response body as a dictionary of strings
-            response_body_bytes = [chunk async for chunk in response.body_iterator]
-            response.body_iterator = iterate_in_threadpool(iter(response_body_bytes))
-            if response_headers.get("content-type", None) == "application/json":
-                response_body = orjson.loads(b"".join(response_body_bytes))
-            else:
-                response_body = b"".join(response_body_bytes).decode()
-
-            # self.audit(
-            #     audit_data=HttpAuditResponse(
-            #         request_uuid=audit_request_model.uuid,
-            #         body=response_body,
-            #         headers=response_headers,
-            #         status_code=response.status_code,
-            #     ),
-            #     kafka_topic=response_audit_topic,
-            # )
-
-            return response
+    def add_model_to_schema_registry(self, model: AuditBaseModel):
+        if isinstance(model, AuditBaseModel):
+            self._schema_registry_models[model.__class__.__name__] = self._get_avro_serializer(model.__class__)
+        else:
+            self._schema_registry_models[model.__name__] = self._get_avro_serializer(model)
 
     def audit(self, audit_data: AuditBaseModel, kafka_topic: str):
         logger.debug(f"Current Thread: {threading.current_thread()}")
@@ -195,14 +142,17 @@ class Auditor:
 
         # If the model is in the schema registry, we can just grab the schema from there, otherwise we need to generate
         # the schema and store it in the registry
-        if audit_data.__class__ in self.schema_registry_models:
-            avro_serializer = self.schema_registry_models[audit_data.__class__]
+        if not isinstance(audit_data, AuditBaseModel):
+            raise ValueError("audit_data must be an instance of AuditBaseModel")
+
+        if audit_data.__class__.__name__ in self._schema_registry_models:
+            avro_serializer = self._schema_registry_models[audit_data.__class__.__name__]
         else:
             avro_serializer = self._get_avro_serializer(audit_data)
-            self.schema_registry_models[audit_data.__class__] = avro_serializer
+            self._schema_registry_models[audit_data.__class__.__name__] = avro_serializer
 
         try:
-            avro_value = avro_serializer(audit_data.dict(), SerializationContext(kafka_topic, MessageField.VALUE))
+            avro_value = avro_serializer(audit_data.avro_dict(), SerializationContext(kafka_topic, MessageField.VALUE))
         except SchemaRegistryError as e:
             self._produce_to_dead_letter_topic(audit_data.model_dump_json(), str(audit_data.audit_uuid))
             raise ValueError(
@@ -242,7 +192,7 @@ class Auditor:
                 schema_registry_client=SchemaRegistryClient(
                     conf={"url": self._schema_registry_url},
                 ),
-                schema_str=model.avro_schema,
+                schema_str=model.get_avro_schema(),
             )
             if self._schema_registry_url
             else None
@@ -302,7 +252,7 @@ class Auditor:
 
             return
         logger.info(
-            f"record {msg.key() + ' ' if msg.key() else ''}successfully produced to "
+            f"record {msg.key().decode() + ' ' if msg.key() else ''}successfully produced to "
             f"{msg.topic()} [{msg.partition()}] at offset {msg.offset()}"
         )
 
@@ -335,3 +285,80 @@ class Auditor:
 
         if err is not None:
             raise Exception(f"A message failed to be delivered to the dead-letter topic: {err}")
+
+
+class HttpAuditRequest(AuditBaseModel):
+    """Audit request model."""
+
+    uuid: UUID = Field(default_factory=uuid4)
+    type: str
+    asgi: Dict[str, str]
+    http_version: str
+    client: str
+    scheme: str
+    root_path: str
+    headers: Dict[str, str]
+    method: str
+    path: str
+    query_string: str
+
+    @classmethod
+    def from_request(cls, request: Request) -> "HttpAuditRequest":
+        request_dict = dict(request)
+        request_dict["headers"] = {h[0].decode(): h[1].decode() for h in request.headers.raw}
+        request_dict["client"] = f"{request.client.host}:{request.client.port}"
+        return cls(**request_dict)
+
+
+class HttpAuditResponse(AuditBaseModel):
+    """Audit response model."""
+
+    request_uuid: UUID
+    body: Dict[str, Any]
+    headers: Dict[str, str]
+    status_code: int
+
+
+def initialize_starlette_middleware(
+    app: FastAPI,
+    auditor: Auditor,
+    request_audit_topic: str,
+    response_audit_topic: str,
+):
+    # Generate the Avro schemas for the audit models and store them in the schema registry
+    auditor.add_model_to_schema_registry(HttpAuditRequest)
+    auditor.add_model_to_schema_registry(HttpAuditResponse)
+
+    # Add middleware to the FastAPI app to audit requests and responses
+    @app.middleware("http")
+    async def audit_request_and_response(request: Request, call_next):
+        audit_request_model = HttpAuditRequest.from_request(request)
+        auditor.audit(
+            audit_data=audit_request_model,
+            kafka_topic=request_audit_topic,
+        )
+
+        response = await call_next(request)
+
+        # get the response headers as a dict of strings
+        response_headers = {h[0].decode(): h[1].decode() for h in response.headers.raw}
+
+        # Obtain the response body as a dictionary of strings
+        response_body_bytes = [chunk async for chunk in response.body_iterator]
+        response.body_iterator = iterate_in_threadpool(iter(response_body_bytes))
+        if response_headers.get("content-type", None) == "application/json":
+            response_body = orjson.loads(b"".join(response_body_bytes))
+        else:
+            response_body = None
+
+        auditor.audit(
+            audit_data=HttpAuditResponse(
+                request_uuid=audit_request_model.uuid,
+                body=response_body,
+                headers=response_headers,
+                status_code=response.status_code,
+            ),
+            kafka_topic=response_audit_topic,
+        )
+
+        return response

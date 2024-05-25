@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from fastapi import FastAPI
 
-from audit import Auditor
+from audit import Auditor, initialize_starlette_middleware
 from models import Foo
 
 auditor = Auditor(
@@ -12,10 +12,11 @@ auditor = Auditor(
 )
 
 app = FastAPI()
-auditor.initialize_middleware(
+initialize_starlette_middleware(
     app,
-    request_audit_topic="requests",
-    response_audit_topic="responses",
+    auditor=auditor,
+    request_audit_topic="fastapi-requests",
+    response_audit_topic="fastapi-responses",
 )
 
 
