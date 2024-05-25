@@ -15,8 +15,8 @@ app = FastAPI()
 initialize_starlette_middleware(
     app,
     auditor=auditor,
-    request_audit_topic="fastapi-requests",
-    response_audit_topic="fastapi-responses",
+    request_audit_topic="fastapi-requests-v1",
+    response_audit_topic="fastapi-responses-v1",
 )
 
 

@@ -58,7 +58,7 @@ class Auditor:
             default_serializer: ('json', 'avro') Default serializer to use for models that do not have a specific
                                 serializer.
         """
-        self._default_serializer = default_serializer
+        self._default_serializer = SerializerClass(default_serializer.lower())
         self._schema_registry_url = schema_registry_url
         self._kafka_producer = Producer({"bootstrap.servers": kafka_brokers})
 
@@ -77,12 +77,6 @@ class Auditor:
             self._kafka_dead_letter_producer = Producer({"bootstrap.servers": kafka_brokers})
         else:
             logger.warning("No dead-letter topic configured, messages that fail to be delivered will be lost.")
-
-        try:
-            self.task = asyncio.create_task(self._background_task())
-        except RuntimeError:
-            logger.info("No running event loop found, running background task.  Starting a new event loop")
-            asyncio.run(self._background_task())
 
     async def _background_task(self):
         # TODO: have this work by checking if this is running when audit is called, then adding it as a task to the
@@ -108,8 +102,9 @@ class Auditor:
         else:
             raise ValueError("model must be an instance of BaseModel or a BaseModel subclass.")
 
-    def audit(self, audit_data: BaseModel, kafka_topic: str, serializer_class: SerializerClass = None):
+    def audit(self, audit_data: BaseModel, kafka_topic: str, serializer_class: SerializerClass = None)->UUID:
         logger.debug(f"Current Thread: {threading.current_thread()}")
+        audit_uuid = uuid4()
 
         if serializer_class is None:
             serializer_class = self._default_serializer
@@ -125,11 +120,13 @@ class Auditor:
         #       or something to check on the audit threads once and a while to see if they passed or failed, and then
         #       raise errors in the main thread if they failed and raised errors of their own.
         # run the audit in a separate thread, so we can get back to the task at hand ASAP
-        audit_request_thread = threading.Thread(target=self._do_audit, args=[audit_data, kafka_topic, serializer_class])
+        audit_request_thread = threading.Thread(target=self._do_audit, args=[audit_data, kafka_topic, serializer_class, audit_uuid])
         audit_request_thread.start()
 
-    def _do_audit(self, audit_data: BaseModel, kafka_topic: str, serializer_class: SerializerClass):
-        logger.info(f"Auditing {audit_data} to {kafka_topic}")
+        return audit_uuid
+
+    def _do_audit(self, audit_data: BaseModel, kafka_topic: str, serializer_class: SerializerClass, audit_uuid: UUID):
+        logger.info(f"Auditing {audit_data.__class__.__name__} [{audit_uuid}] to {kafka_topic}")
         logger.debug(f"Current Thread: {threading.current_thread()}")
 
         # If the model is in the schema registry, we can just grab the schema from there, otherwise we need to generate
@@ -144,11 +141,11 @@ class Auditor:
             self._schema_registry_models[audit_data.__class__.__name__] = serializer
 
         try:
-            serialized_value = serializer(audit_data.dict(), SerializationContext(kafka_topic, MessageField.VALUE))
+            serialized_value = serializer(orjson.loads(audit_data.model_dump_json()), SerializationContext(kafka_topic, MessageField.VALUE))
         except SchemaRegistryError as e:
-            self._produce_to_dead_letter_topic(audit_data.model_dump_json(), str(audit_data.audit_uuid))
+            self._produce_to_dead_letter_topic(audit_data.model_dump_json(), str(audit_uuid))
             raise ValueError(
-                f"Failed registering audit_uuid `{audit_data.audit_uuid}` to the Schema Registry!\n"
+                f"Failed registering audit_uuid `{audit_uuid}` to the Schema Registry!\n"
                 "HINT: you may need to go and delete the currently registered schema, though note that this may have "
                 "unintended consequences as any existing topic data may not be able to be serialized using the new "
                 "schema.  In short, you either expected (or are not surprised by this error) and likely want to delete "
@@ -156,7 +153,7 @@ class Auditor:
                 f"SchemaRegistryError: {e}"
             ) from e
         except SerializerError as e:
-            self._produce_to_dead_letter_topic(audit_data.model_dump_json(), str(audit_data.audit_uuid))
+            self._produce_to_dead_letter_topic(audit_data.model_dump_json(), str(audit_uuid))
             raise ValueError(f"Failed to serialize audit data `{audit_data}` to Avro!\nSerializerError: {e}") from e
 
         # TODO: review the docs and make sure we are handling .flush() correctly and whether we need to perform
@@ -166,11 +163,11 @@ class Auditor:
             self._kafka_producer.produce(
                 topic=kafka_topic,
                 value=serialized_value,
-                key=str(audit_data.audit_uuid),
+                key=str(audit_uuid),
                 on_delivery=self._delivery_report,
             )
         except Exception as e:
-            self._produce_to_retry_topic(audit_data.model_dump_json(), str(audit_data.audit_uuid))
+            self._produce_to_retry_topic(audit_data.model_dump_json(), str(audit_uuid))
             raise ValueError(f"Failed to produce audit data `{audit_data}` to Kafka!\nException: {e}") from e
         finally:
             self._kafka_producer.flush()
@@ -178,8 +175,6 @@ class Auditor:
     def _get_serializer(
         self, model: BaseModel, serializer_class: SerializerClass
     ) -> Optional[Union[AvroSerializer, JSONSerializer]]:
-        # TODO: explore switching to a cached_property for this method
-
         """Generate an Avro serializer for the provided model."""
         logger.debug(f"Current Thread: {threading.current_thread()}")
 
@@ -194,7 +189,7 @@ class Auditor:
         if serializer_class is SerializerClass.JSON:
             serializer = JSONSerializer(
                 schema_registry_client=schema_registry_client,
-                schema_str=model.model_json_schema(),
+                schema_str=orjson.dumps(model.model_json_schema()).decode(),
             )
         elif serializer_class is SerializerClass.AVRO:
             logger.warning("Avro serialization is experimental and may not work as expected.")
@@ -289,7 +284,6 @@ class Auditor:
     @staticmethod
     def _break_glass(err, msg):
         """This is a callback that will raise an exception if a message fails to be delivered."""
-        # TODO: make sure this halts the program and doesn't just log the error (if running in a separate thread)
         logger.debug(f"Current Thread: {threading.current_thread()}")
 
         if err is not None:
@@ -322,8 +316,8 @@ class HttpAuditRequest(BaseModel):
 class HttpAuditResponse(BaseModel):
     """Audit response model."""
 
-    request_uuid: UUID
-    body: Dict[str, Any]
+    request_audit_uuid: UUID
+    body: Optional[Dict[str, Any]]
     headers: Dict[str, str]
     status_code: int
 
@@ -334,6 +328,9 @@ def initialize_starlette_middleware(
     request_audit_topic: str,
     response_audit_topic: str,
 ):
+    # TODO: might be nice to have a way to only audit certain endpoints, either by using a header in the payload, or
+    #       by having a dependency or something the dev can add to the endpoints they want audited
+
     # Generate the Avro schemas for the audit models and store them in the schema registry
     auditor.add_model_to_schema_registry(HttpAuditRequest)
     auditor.add_model_to_schema_registry(HttpAuditResponse)
@@ -342,7 +339,7 @@ def initialize_starlette_middleware(
     @app.middleware("http")
     async def audit_request_and_response(request: Request, call_next):
         audit_request_model = HttpAuditRequest.from_request(request)
-        auditor.audit(
+        audit_uuid = auditor.audit(
             audit_data=audit_request_model,
             kafka_topic=request_audit_topic,
         )
@@ -362,7 +359,7 @@ def initialize_starlette_middleware(
 
         auditor.audit(
             audit_data=HttpAuditResponse(
-                request_uuid=audit_request_model.uuid,
+                request_audit_uuid=audit_uuid,
                 body=response_body,
                 headers=response_headers,
                 status_code=response.status_code,
