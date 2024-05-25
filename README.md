@@ -33,7 +33,6 @@ graph LR
     Q -->|Tracks metadata of| D
     Q -->|Tracks metadata of| P
     Q -->|Tracks metadata of| U
-    Q -->|Tracks metadata of| R
     T -->|Feature Store| U[Feast]
     U -->|Online Feature Store| B
 ```
