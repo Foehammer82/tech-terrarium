@@ -29,6 +29,17 @@ from starlette.requests import Request
 # logger.addHandler(console_handler)
 
 
+"""
+NOTES:
+- first tried to setup everything with Avro Schema's, but found that while avro is FAST and EFFICIENT, it is restrictive
+  in what it can serialize, and requires a lot of boilerplate code to get working.  I then tried to use JSON Schema's
+  and that went a lot smoother.
+- main lesson learned is that Avro should be the first choice but if you find that it doesn't fit your needs from a 
+  schema standpoint don't hesitate to switch to json.  since auditing needs to be flexible I chose to go with JSON and
+  take the efficiency loss by not using Avro
+"""
+
+
 class SerializerClass(StrEnum):
     AVRO = "avro"
     JSON = "json"
@@ -102,7 +113,7 @@ class Auditor:
         else:
             raise ValueError("model must be an instance of BaseModel or a BaseModel subclass.")
 
-    def audit(self, audit_data: BaseModel, kafka_topic: str, serializer_class: SerializerClass = None)->UUID:
+    def audit(self, audit_data: BaseModel, kafka_topic: str, serializer_class: SerializerClass = None) -> UUID:
         logger.debug(f"Current Thread: {threading.current_thread()}")
         audit_uuid = uuid4()
 
@@ -120,7 +131,9 @@ class Auditor:
         #       or something to check on the audit threads once and a while to see if they passed or failed, and then
         #       raise errors in the main thread if they failed and raised errors of their own.
         # run the audit in a separate thread, so we can get back to the task at hand ASAP
-        audit_request_thread = threading.Thread(target=self._do_audit, args=[audit_data, kafka_topic, serializer_class, audit_uuid])
+        audit_request_thread = threading.Thread(
+            target=self._do_audit, args=[audit_data, kafka_topic, serializer_class, audit_uuid]
+        )
         audit_request_thread.start()
 
         return audit_uuid
@@ -141,7 +154,9 @@ class Auditor:
             self._schema_registry_models[audit_data.__class__.__name__] = serializer
 
         try:
-            serialized_value = serializer(orjson.loads(audit_data.model_dump_json()), SerializationContext(kafka_topic, MessageField.VALUE))
+            serialized_value = serializer(
+                orjson.loads(audit_data.model_dump_json()), SerializationContext(kafka_topic, MessageField.VALUE)
+            )
         except SchemaRegistryError as e:
             self._produce_to_dead_letter_topic(audit_data.model_dump_json(), str(audit_uuid))
             raise ValueError(
