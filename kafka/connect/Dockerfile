@@ -4,6 +4,10 @@ RUN confluent-hub install --no-prompt confluentinc/kafka-connect-jdbc:latest
 RUN confluent-hub install --no-prompt mongodb/kafka-connect-mongodb:latest
 RUN confluent-hub install --no-prompt confluentinc/kafka-connect-datagen:latest
 
-# DEFAULT RUN SCRIPT: https://github.com/confluentinc/kafka-images/blob/master/server/include/etc/confluent/docker/run
+# Copy in predefined connector configurations
+COPY ./default_connector_configs /default_connector_configs
+ENV DEFAULT_CONNECTOR_CONFIGS_DIR=/default_connector_configs
+
+# Run the custom startup script
 COPY ./startup.sh ./startup.sh
 CMD ["sh", "./startup.sh"]

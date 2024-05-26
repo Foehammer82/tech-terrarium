@@ -12,14 +12,19 @@ while : ; do
   sleep 5
 done
 
-echo -e "\n--\n+> Creating Data Generator source"
-curl -s -X PUT -H  "Content-Type:application/json" http://localhost:8083/connectors/source-datagen-01/config \
-    -d '{
-    "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
-    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-    "kafka.topic": "ratings",
-    "max.interval":750,
-    "quickstart": "ratings",
-    "tasks.max": 1
-}'
+echo -e "\n--\n+> Creating pre-defined Kafka Connect connectors"
+# Check if directory exists
+if [ -d "$DEFAULT_CONNECTOR_CONFIGS_DIR" ]; then
+  # Loop through all JSON files in the directory
+  for file in "$DEFAULT_CONNECTOR_CONFIGS_DIR"/*.json; do
+    # Check if file exists
+    if [ -f "$file" ]; then
+      curl -s -X PUT -H  "Content-Type:application/json" http://localhost:8083/connectors/source-datagen-01/config \
+           -d "$(cat "$file")"
+    fi
+  done
+else
+  echo "Directory $dir does not exist."
+fi
+
 sleep infinity
