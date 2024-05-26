@@ -5,7 +5,7 @@
 echo "Waiting for Kafka Connect to start listening on localhost ⏳"
 while : ; do
   curl_status=$(curl -s -o /dev/null -w %{http_code} http://localhost:8083/connectors)
-  echo -e $(date) " Kafka Connect listener HTTP state: " $$curl_status " (waiting for 200)"
+  echo -e $(date) " Kafka Connect listener HTTP state: " $curl_status " (waiting for 200)"
   if [ $curl_status -eq 200 ] ; then
     break
   fi

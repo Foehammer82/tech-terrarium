@@ -39,6 +39,8 @@ NOTES:
   take the efficiency loss by not using Avro
 """
 
+# TODO: create an init script that will create the necessary topics in Kafka if they do not exist
+
 
 class SerializerClass(StrEnum):
     AVRO = "avro"

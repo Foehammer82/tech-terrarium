@@ -7,6 +7,9 @@ various tools and technologies.
 There are some coded applications within this environment, we chose to implement them in Python for simplicity and speed
 to deployment, but the idea is that any Python app here could be re-written in another language.
 
+> All services deployed in the Tech-Terrarium are open source and free to use. The project is intended for educational
+> purposes, and designed to be run on inexpensive commodity hardware like Raspberry Pi's.
+
 ```mermaid
 graph LR
     A[FastAPI] -->|Caches Data To| B[Redis]
@@ -36,8 +39,6 @@ graph LR
     T -->|Feature Store| U[Feast]
     U -->|Online Feature Store| B
 ```
-
-> NOTE: This Mermaid diagram was generated with the help of Copilot 😊
 
 ## Usage
 
