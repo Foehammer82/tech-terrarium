@@ -1,0 +1,22 @@
+title: Dark-Water
+background:
+  image: /images/terrarium_bg.png
+  opacity: 60
+cardBlur: sm
+theme: dark
+color: slate
+hideVersion: true
+headerStyle: clean
+showStats: false
+
+layout:
+  Administration:
+    style: "row"
+    columns: 3
+    useEqualHeights: true
+    disableCollapse: true
+  Services:
+    style: "row"
+    columns: 4
+    useEqualHeights: true
+    disableCollapse: true

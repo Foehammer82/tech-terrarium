@@ -1,3 +1,5 @@
+# Data Warehouse vs Data Lake
+
 Choosing between a data warehouse and a data lake depends on your specific use case and data requirements:
 
 1. Data Warehouse (e.g., Snowflake):

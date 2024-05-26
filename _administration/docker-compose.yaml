@@ -1,0 +1,11 @@
+services:
+  homepage:
+    build:
+      context: homepage
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "80:3000"
+    environment:
+      PUID: 1001
+      PGID: 1001

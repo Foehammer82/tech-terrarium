@@ -1,0 +1,11 @@
+- logo:
+    icon: /images/terrarium_icon.png
+- greeting:
+    text_size: xl
+    text: Foehammer's Tech-Terrarium
+- datetime:
+    text_size: xl
+    format:
+      dateStyle: short
+      timeStyle: short
+      hourCycle: h23

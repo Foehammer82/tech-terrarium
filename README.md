@@ -133,7 +133,6 @@ Alternatives: Apache Spark, Talend, Matillion
 ## TODO
 
 - [ ] set up a mkdocs site to document the terrarium
-    - add mermaid diagram(s) of the services in the project showing how they interact with each other
 - [ ] add pre-commit checks to the project
 - [ ] set up the FastAPI to utilize redis caching so that we can see data moving into redis and then utilize that data
   elsewhere
