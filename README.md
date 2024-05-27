@@ -1,8 +1,5 @@
 # Tech-Terrarium
 
-> TODO:
-> Move off of GitLab (at least for this project) and onto GitHub.
-
 **Documentation**:
 <a href="https://tech-terrarium.foehammer.dev/" target="_blank">https://tech-terrarium.foehammer.dev/</a>
 
