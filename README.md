@@ -60,9 +60,7 @@ TODO: Add usage instructions (makefile and manual running and whatnot)
 ## TODO
 
 - [x] set up a mkdocs site to document the terrarium
-- [ ] add pre-commit checks to the project
-- [ ] set up the FastAPI to utilize redis caching so that we can see data moving into redis and then utilize that data
-  elsewhere
+- [x] add pre-commit checks to the project
 - [x] set up a project homepage using [Homepage](https://github.com/gethomepage/homepage) or something similar to make a
   single point of entry for all the services in the Terrarium.
 - [ ] Kafka Connectors
@@ -82,10 +80,12 @@ TODO: Add usage instructions (makefile and manual running and whatnot)
     - basic consumer
     - avro consumer
     - async usage example
-- [ ] set up a Makefile to make it easier to run the services and start the Terrarium, parts of the terrarium.
+- [x] set up a Makefile to make it easier to run the services and start the Terrarium, parts of the terrarium.
 - [ ] build out the airflow instance with DAG's that perform scheduled operations on the rest of the terrarium
     - implement a DBT repo/project to be orchestrated by airflow
 - [ ] setup metabase with some default dashboards for the terrarium
+    - note, if there isn't a way to have the project create defaults on container start, just write instructions for how
+      to build some basic dashboards. but it would be SUPER slick to have a way to do it automatically.
 - [ ] dig deeper into MlFlow to expand knowledge and experience with building and releasing models.
     - might be worth setting up a feast repo/project for online/offline features stores for a model utilizing postgres
       and redis for practice.

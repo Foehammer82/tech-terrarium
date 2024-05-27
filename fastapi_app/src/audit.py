@@ -6,6 +6,19 @@ NOTES:
 - main lesson learned is that Avro should be the first choice but if you find that it doesn't fit your needs from a
   schema standpoint don't hesitate to switch to json.  since auditing needs to be flexible I chose to go with JSON and
   take the efficiency loss by not using Avro
+
+Lineage Mind Dump (TODO):
+i think there's a way to use open lineage alongside auditing to treat audits as a "job" and publish them to datahub
+with open lineage.  we have the object schemas thanks to pydantic, we have the destination thanks to confluent
+producers, and we have the groundwork laid to include emiting all this during the audit process.
+
+it would have the app show up in datahub as a  open lineage job, and then tasks as each individual
+audit category(or kafka topic)
+
+implementation of this will help POC and fully form my thoughts around this, and then im hoping we can take it
+beyond just auditing and build out another one for any python app that creates or pushes data out to anywhere, be
+it PG, Mongo, Kafka, Snowflake, etc. (anywhere DH recognizes)
+
 """
 
 import asyncio
