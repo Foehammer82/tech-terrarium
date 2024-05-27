@@ -19,6 +19,7 @@ py-avro-schema = "^3"
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
 pre-commit = "^3.7.1"
+poetry-plugin-export = "^1.8.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.2.1"

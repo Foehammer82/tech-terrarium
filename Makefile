@@ -47,6 +47,3 @@ start-metabase:
 	docker-compose -f metabase/docker-compose.yaml -p metabase up -d --force-recreate
 stop-metabase:
 	docker-compose -f metabase/docker-compose.yaml -p metabase down
-
-
-

@@ -1,3 +1,13 @@
+"""
+NOTES:
+- first tried to set up everything with Avro Schema's, but found that while avro is FAST and EFFICIENT, it is restrictive
+  in what it can serialize, and requires a lot of boilerplate code to get working.  I then tried to use JSON Schema's
+  and that went a lot smoother.
+- main lesson learned is that Avro should be the first choice but if you find that it doesn't fit your needs from a
+  schema standpoint don't hesitate to switch to json.  since auditing needs to be flexible I chose to go with JSON and
+  take the efficiency loss by not using Avro
+"""
+
 import asyncio
 import inspect
 import threading
@@ -27,17 +37,6 @@ from starlette.requests import Request
 # console_handler = logging.StreamHandler()
 # console_handler.setLevel(logging.DEBUG)
 # logger.addHandler(console_handler)
-
-
-"""
-NOTES:
-- first tried to setup everything with Avro Schema's, but found that while avro is FAST and EFFICIENT, it is restrictive
-  in what it can serialize, and requires a lot of boilerplate code to get working.  I then tried to use JSON Schema's
-  and that went a lot smoother.
-- main lesson learned is that Avro should be the first choice but if you find that it doesn't fit your needs from a 
-  schema standpoint don't hesitate to switch to json.  since auditing needs to be flexible I chose to go with JSON and
-  take the efficiency loss by not using Avro
-"""
 
 # TODO: create an init script that will create the necessary topics in Kafka if they do not exist
 
@@ -238,7 +237,7 @@ class Auditor:
             )
             self._kafka_retry_producer.flush()
         else:
-            logger.warning(f"No retry topic configured, forward to the dead-letter topic.")
+            logger.warning("No retry topic configured, forward to the dead-letter topic.")
             self._produce_to_dead_letter_topic(value, key)
 
     def _delivery_report(self, err, msg):

@@ -10,6 +10,19 @@ to deployment, but the idea is that any Python app here could be re-written in a
 > All services deployed in the Tech-Terrarium are open source and free to use. The project is intended for educational
 > purposes, and designed to be run on inexpensive commodity hardware like Raspberry Pi's.
 
+## Motivation
+
+I have often found myself digging through past projects to look up how different implementations were accomplished or
+to reference a past approach. I have also commonly found myself re-researching the same things over and over again
+throughout both personal and professional projects. Enter the `Tech-Terrarium`. This project is mostly for my own
+benefit to be able to quickly spin up, look at, and play with different approaches to Data Engineering and Software
+Engineering problems. And, if this helps someone else along the way, then that's a bonus!
+
+That said, if you do find yourself here and have questions, comments, feedback, or suggestions, please feel free to
+reach out or start create an `Issue` or `Pull Request`. If you do make a pull request, please make it against
+the [GitLab Repository]() as the GitHub repository is only a mirror. And, this should go without saying, but please be
+respectful and considerate when making comments or suggestions.
+
 ```mermaid
 graph LR
     A[FastAPI] -->|Caches Data To| B[Redis]
@@ -43,92 +56,6 @@ graph LR
 ## Usage
 
 TODO: Add usage instructions (makefile and manual running and whatnot)
-
-## Services
-
-### PostgreSQL - Relational Database
-
-Relational database that stores data in tables with rows and columns. It is used to store structured data and is
-commonly used in enterprise applications.
-
-Alternatives: MySQL, SQLite, Oracle
-
-### MongoDB - NoSQL Database
-
-NoSQL database that stores data in JSON-like documents with dynamic schemas. It is used to store unstructured data and
-
-Alternatives: CouchDB, Cassandra, HBase
-
-### Redis - In-Memory Data Store
-
-In-memory data store that supports various data structures like strings, hashes, lists, sets, and sorted sets. It is
-used for caching, session storage, and real-time analytics.
-
-In this stack, Redis is being used for FastAPI caching and the online feature store registry for Feast.
-
-Alternatives: Memcached, Hazelcast, Apache Ignite
-
-### Kafka - Distributed Streaming Platform
-
-Distributed streaming platform that is used for building real-time data pipelines and streaming applications. It is
-used for publishing and subscribing to streams of records.
-
-In this stack, Kafka is being used to stream data between services and as a source for Flink.
-
-Alternatives: RabbitMQ, ActiveMQ, Pulsar
-
-### FastAPI - Web Framework
-
-Web framework for building APIs with Python. It is used for creating RESTful APIs with high performance and easy
-development.
-
-### gRPC - Remote Procedure Call Framework
-
-Remote procedure call framework that is used for communication between services. It is used for defining services and
-methods in a protocol buffer format.
-
-### Flink - Stream Processing Framework
-
-Stream processing framework that is used for processing unbounded and bounded data streams. It is used for stateful
-computations on real-time data.
-
-### Airflow - Workflow Scheduler
-
-Workflow scheduler that is used for orchestrating complex data pipelines. It is used for scheduling
-tasks/jobs/workflows and monitoring them.
-
-Alternatives: Luigi, Prefect, Dagster
-
-### Metabase - Business Intelligence Tool
-
-Business intelligence tool that is used for visualizing and analyzing data. It is used for creating dashboards and
-reports.
-
-Alternatives: Tableau, Power BI, Looker
-
-### MlFlow - Machine Learning Lifecycle Tool
-
-Machine learning lifecycle tool that is used for managing the end-to-end machine learning process. It is used for
-tracking experiments, packaging code, and deploying models.
-
-### Feast - Feature Store
-
-Feature store that is used for managing and serving machine learning features. It is used for storing and serving
-features for training and serving machine learning models.
-
-### DataHub - Metadata Management Tool
-
-Metadata management tool that is used for tracking metadata of data assets. It is used for discovering, understanding,
-and governing data assets.
-
-Alternatives: Apache Atlas, Amundsen, Data Catalog, OpenMetadata, Alation
-
-### DBT - Data Transformation Tool
-
-Data transformation tool that is used for transforming data in the data warehouse. It is used for writing SQL queries
-to transform data and create data models.
-
-Alternatives: Apache Spark, Talend, Matillion
 
 ## TODO
 
@@ -191,5 +118,6 @@ Alternatives: Apache Spark, Talend, Matillion
 
 ## Credits
 
-- Terrarium Icon: <a href="https://www.flaticon.com/free-icons/terrarium" title="terrarium icons">Terrarium icons created by Freepik -
+- Terrarium Icon: <a href="https://www.flaticon.com/free-icons/terrarium" title="terrarium icons">Terrarium icons
+  created by Freepik -
   Flaticon</a>
