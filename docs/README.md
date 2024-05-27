@@ -74,11 +74,9 @@ graph LR
 - [x] add pre-commit checks to the project
 - [x] set up a project homepage using [Homepage](https://github.com/gethomepage/homepage) or something similar to make a
   single point of entry for all the services in the Terrarium.
-- [ ] Kafka Connectors
+- [x] Kafka Connectors
     - [PostgreSQL Sink](https://docs.confluent.io/cloud/current/connectors/cc-postgresql-sink.html)
-    - [GitHub Source](https://docs.confluent.io/cloud/current/connectors/cc-github-source.html)
-        - would be neat to have this project be able to track change to itself from GitHub and any/all supporting
-          projects (i.e. postgres,confluent,fastapi,etc. repos)
+    - [MongoDB Sink](https://www.mongodb.com/docs/kafka-connector/current/sink-connector/configuration-properties/all-properties/)
 - [ ] Set up Flink
     - https://flink.apache.org/
     - https://docs.confluent.io/cloud/current/flink/overview.html
