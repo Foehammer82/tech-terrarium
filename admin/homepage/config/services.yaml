@@ -19,6 +19,7 @@
     - Kafka (Kafbat-UI):
         icon: /images/kafka_icon.png
         href: http://localhost:9021/
+        description: "un/pw: NONE"
         container: kafka-kafbat-ui-1
     - Postgres (pgAdmin):
         icon: postgres
@@ -28,14 +29,16 @@
     - MongoDB (Mongo-Express):
         icon: mongodb
         href: http://localhost:8086/
+        description: "un/pw: admin/password"
         container: mongo-mongo-express-1
     - Redis (Redis-Commander):
         icon: redis
         href: http://localhost:8085/
+        description: "un/pw: NONE"
         container: redis-redis-commander-1
     - Spark:
         icon: /images/spark_icon.png
-        description: NOT IMPLEMENTED YET
+        description: "NOT IMPLEMENTED YET"
 
 - Application Frameworks:
     - FastAPI App (Swagger Docs):
@@ -64,7 +67,9 @@
 - BI Tools & Data-Cataloging:
     - Datahub:
         icon: /images/datahub_icon.png
-        description: NOT IMPLEMENTED YET
+        description: "un/pw: datahub/datahub"
+        href: http://localhost:9002/
+        container: datahub-frontend-1
     - Metabase:
         icon: metabase
         href: http://localhost:3000

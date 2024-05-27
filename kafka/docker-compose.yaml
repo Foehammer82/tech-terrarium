@@ -13,8 +13,6 @@ services:
     restart: on-failure
     hostname: broker
     container_name: broker
-#    depends_on:
-#      - zookeeper
     ports:
       - "9092:9092"
       - "9101:9101"
@@ -40,6 +38,12 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    healthcheck:
+      interval: 1s
+      retries: 5
+      start_period: 60s
+      test: nc -z broker 9092
+      timeout: 5s
 
   schema-registry:
     image: confluentinc/cp-schema-registry:7.6.1
@@ -60,6 +64,12 @@ services:
       SCHEMA_REGISTRY_SCHEMA_REGISTRY_INTER_INSTANCE_PROTOCOL: "http"
       SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: INFO
       SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+    healthcheck:
+      interval: 1s
+      retries: 3
+      start_period: 60s
+      test: nc -z schema-registry 8081
+      timeout: 5s
 
   connect:
     build:
@@ -99,6 +109,7 @@ services:
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
 
   kafbat-ui:
+    # TODO: tie in datahub's kafka server to this UI
     image: ghcr.io/kafbat/kafka-ui:latest
     ports:
       - "9021:8080"

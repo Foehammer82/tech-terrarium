@@ -1,0 +1,12 @@
+source:
+  type: "kafka"
+  config:
+    platform_instance: "tech-terrarium"
+    connection:
+      bootstrap: "broker:9092"
+      schema_registry_url: http://schema-registry:8081
+
+sink:
+  type: "datahub-rest"
+  config:
+    server: "http://datahub-gms:8080"
