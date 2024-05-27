@@ -1,8 +1,8 @@
 {
   "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
   "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-  "kafka.topic": "ratings",
+  "kafka.topic": "datagen_device_information",
   "max.interval": 750,
-  "quickstart": "ratings",
+  "quickstart": "device_information",
   "tasks.max": 1
 }

@@ -22,7 +22,8 @@
         container: kafka-kafbat-ui-1
     - Postgres (pgAdmin):
         icon: postgres
-        href: http://localhost:5050/
+        href: http://localhost:8888/
+        description: "un/pw: admin@not.com/password"
         container: postgres-pgadmin-1
     - MongoDB (Mongo-Express):
         icon: mongodb
@@ -48,7 +49,7 @@
 - Orchestration:
     - Airflow:
         icon: /images/airflow_icon.png
-        description: "username: airflow \npassword:airflow"
+        description: "un/pw: airflow/airflow"
         href: http://localhost:8080/
         container: airflow-airflow-webserver-1
 

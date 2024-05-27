@@ -19,8 +19,14 @@ if [ -d "$DEFAULT_CONNECTOR_CONFIGS_DIR" ]; then
   for file in "$DEFAULT_CONNECTOR_CONFIGS_DIR"/*.json; do
     # Check if file exists
     if [ -f "$file" ]; then
-      curl -s -X PUT -H  "Content-Type:application/json" http://localhost:8083/connectors/source-datagen-01/config \
-           -d "$(cat "$file")"
+      response=$(curl -s -X PUT -H  "Content-Type:application/json" http://localhost:8083/connectors/$(basename -s .json "$file")/config \
+           -d "$(cat "$file")")
+      status=$?
+      if [ $status -ne 0 ]; then
+        # Print the error message in red and exit
+        echo -e "\033[31m$response\033[0m"
+        exit $status
+      fi
     fi
   done
 else

@@ -68,7 +68,7 @@ graph LR
     U -->|Online Feature Store| B
 ```
 
-## TODO
+## MVP Roadmap
 
 - [x] set up a mkdocs site to document the terrarium
 - [x] add pre-commit checks to the project

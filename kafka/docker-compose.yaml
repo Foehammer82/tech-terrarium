@@ -74,6 +74,7 @@ services:
       - "8083:8083"
     networks:
       - kafka
+      - terrarium
     environment:
       CONNECT_BOOTSTRAP_SERVERS: 'broker:29092'
       CONNECT_REST_PORT: 8083
