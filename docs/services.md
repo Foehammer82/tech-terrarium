@@ -1,5 +1,7 @@
 # Services
 
+## Active Terrarium Services
+
 ### PostgreSQL - Relational Database
 
 Relational database that stores data in tables with rows and columns. It is used to store structured data and is
@@ -78,3 +80,17 @@ Data transformation tool that is used for transforming data in the data warehous
 to transform data and create data models.
 
 Alternatives: Apache Spark, Talend, Matillion
+
+## Scrubbed Services
+
+Below is are services that I had looked at including in the Tech-Terrarium, but have since decided to remove for one
+reason or another.
+
+### Trino
+
+Reason:
+
+- it's been giving me nothing but challenges and didn't just work out of the box with kafka, which was a
+  main goal for me. will take a look at using flink next for stream processing. Definatly a nice tool, but the
+  given the overhead of setting it up, it's not worth it for this project, and would be a tough to consider
+  pushing for in an enterprise environment without a clear need (don't need a solution looking for a problem).

@@ -1,27 +1,9 @@
 # Foehammer's Tech-Terrarium
 
-Foehammer's Tech-Terrarium is a comprehensive ecosystem of services designed for testing, learning, and development
-purposes. The project aims to simulate a tech stack in a small local environment, providing a hands-on experience with
-various tools and technologies.
+[Documentation](./docs/README.md)
 
-There are some coded applications within this environment, we chose to implement them in Python for simplicity and speed
-to deployment, but the idea is that any Python app here could be re-written in another language.
-
-> All services deployed in the Tech-Terrarium are open source and free to use. The project is intended for educational
-> purposes, and designed to be run on inexpensive commodity hardware like Raspberry Pi's.
-
-## Motivation
-
-I have often found myself digging through past projects to look up how different implementations were accomplished or
-to reference a past approach. I have also commonly found myself re-researching the same things over and over again
-throughout both personal and professional projects. Enter the `Tech-Terrarium`. This project is mostly for my own
-benefit to be able to quickly spin up, look at, and play with different approaches to Data Engineering and Software
-Engineering problems. And, if this helps someone else along the way, then that's a bonus!
-
-That said, if you do find yourself here and have questions, comments, feedback, or suggestions, please feel free to
-reach out or start create an `Issue` or `Pull Request`. If you do make a pull request, please make it against
-the [GitLab Repository]() as the GitHub repository is only a mirror. And, this should go without saying, but please be
-respectful and considerate when making comments or suggestions.
+- [Motivation](./docs/README.md#motivation)
+- [Getting Started](./docs/Getting_Started.md)
 
 ```mermaid
 graph LR
@@ -52,10 +34,6 @@ graph LR
     T -->|Feature Store| U[Feast]
     U -->|Online Feature Store| B
 ```
-
-## Usage
-
-TODO: Add usage instructions (makefile and manual running and whatnot)
 
 ## TODO
 
@@ -108,16 +86,7 @@ TODO: Add usage instructions (makefile and manual running and whatnot)
     - write docs and instructions on setting up the k3s cluster
     - write docs and instructions for deploying the stack on the cluster
 
-## Dropped Services
-
-- Trino
-    - Reason: it's been giving me nothing but challenges and didn't just work out of the box with kafka, which was a
-      main goal for me. will take a look at using flink next for stream processing. Definatly a nice tool, but the
-      given the overhead of setting it up, it's not worth it for this project, and would be a tough to consider
-      pushing for in an enterprise environment without a clear need (don't need a solution looking for a problem).
-
 ## Credits
 
 - Terrarium Icon: <a href="https://www.flaticon.com/free-icons/terrarium" title="terrarium icons">Terrarium icons
-  created by Freepik -
-  Flaticon</a>
+  created by Freepik - Flaticon</a>

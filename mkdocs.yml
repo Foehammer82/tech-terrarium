@@ -2,6 +2,9 @@ site_name: Foehammer's Tech-Terrarium Docs
 site_url: http://localhost:8089
 repo_url: https://github.com/Foehammer82/tech-terrarium
 
+nav:
+  - Home: '../'
+
 theme:
   name: material
   logo: assets/terrarium_icon.png
