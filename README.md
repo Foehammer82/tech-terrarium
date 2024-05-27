@@ -1,20 +1,28 @@
 # Tech-Terrarium
 
+> TODO:
+> Move off of GitLab (at least for this project) and onto GitHub.
+
 **Documentation**:
 <a href="https://tech-terrarium.foehammer.dev/" target="_blank">https://tech-terrarium.foehammer.dev/</a>
 
 **Source Code**:
 <a href="https://github.com/Foehammer82/tech-terrarium" target="_blank">https://github.com/Foehammer82/tech-terrarium</a>
 
-The Tech-Terrarium is a comprehensive ecosystem of services designed for testing, learning, and development
-purposes. The project aims to simulate a tech stack in a small local environment, providing a hands-on experience with
-various tools and technologies.
+The Tech-Terrarium is a compact, hands-on tech stack simulation for learning and development. It features Python
+applications for quick deployment, but they can be re-written in other languages.
 
-There are some coded applications within this environment, we chose to implement them in Python for simplicity and speed
-to deployment, but the idea is that any Python app here could be re-written in another language.
+The project includes services like FastAPI, Redis, Kafka, PostgreSQL, Flink, MongoDB, Airflow, DBT,
+DataHub/OpenMetadata, MlFlow, and Feast. FastAPI is used for building APIs, Kafka for real-time data
+streaming, and PostgreSQL for data storage. Flink is used for stateful computations on data streams, and MongoDB is
+another database option. Airflow is used for orchestrating workflows, and DBT for transforming data in your data
+warehouse. DataHub/OpenMetadata is used for tracking metadata, MlFlow for managing the machine learning lifecycle, and
+Feast for managing features in machine learning models.
 
-> All services deployed in the Tech-Terrarium are open source and free to use. The project is intended for educational
-> purposes, and designed to be run on inexpensive commodity hardware like Raspberry Pi's.
+The project is designed to run on inexpensive hardware like Raspberry Pis and is open source, free to use, and intended
+for educational purposes. It serves as a reference for developers to revisit different implementations and approaches to
+Data Engineering and Software Engineering problems. The project encourages feedback and contributions via Issues or Pull
+Requests on its GitLab repository.
 
 ## Motivation
 
@@ -28,6 +36,8 @@ That said, if you do find yourself here and have questions, comments, feedback, 
 reach out or start create an `Issue` or `Pull Request`. If you do make a pull request, please make it against
 the [GitLab Repository]() as the GitHub repository is only a mirror. And, this should go without saying, but please be
 respectful and considerate when making comments or suggestions.
+
+## Project Architecture
 
 ```mermaid
 graph LR
