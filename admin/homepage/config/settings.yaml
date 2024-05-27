@@ -18,6 +18,12 @@ layout:
     useEqualHeights: true
     disableCollapse: true
 
+  Bookmarks:
+    style: "row"
+    columns: 3
+    useEqualHeights: true
+    disableCollapse: true
+
   Data Stores:
     style: "columns"
     useEqualHeights: true

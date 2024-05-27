@@ -3,6 +3,7 @@ pages:
   image: python:3.11-slim
   script:
     - pip install mkdocs-material
+    - cp READMD.md docs/index.md
     - mkdocs build --site-dir public
   artifacts:
     paths:
