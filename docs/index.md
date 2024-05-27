@@ -1,6 +1,6 @@
 # Foehammer's Tech-Terrarium
 
-Foehammer's Tech-Terrarium is a comprehensive ecosystem of services designed for testing, learning, and development
+The Tech-Terrarium is a comprehensive ecosystem of services designed for testing, learning, and development
 purposes. The project aims to simulate a tech stack in a small local environment, providing a hands-on experience with
 various tools and technologies.
 
@@ -52,3 +52,8 @@ graph LR
     T -->|Feature Store| U[Feast]
     U -->|Online Feature Store| B
 ```
+
+## Credits
+
+- Terrarium Icon: <a href="https://www.flaticon.com/free-icons/terrarium" title="terrarium icons">Terrarium icons
+  created by Freepik - Flaticon</a>

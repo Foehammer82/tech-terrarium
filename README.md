@@ -1,9 +1,33 @@
 # Foehammer's Tech-Terrarium
 
-[Documentation](./docs/README.md)
+**Documentation
+**: <a href="https://tech-terrarium.foehammer.dev/" target="_blank">https://tech-terrarium.foehammer.dev/</a>
 
-- [Motivation](./docs/README.md#motivation)
-- [Getting Started](./docs/Getting_Started.md)
+**Source Code
+**: <a href="https://github.com/Foehammer82/tech-terrarium" target="_blank">https://github.com/Foehammer82/tech-terrarium</a>
+
+The Tech-Terrarium is a comprehensive ecosystem of services designed for testing, learning, and development
+purposes. The project aims to simulate a tech stack in a small local environment, providing a hands-on experience with
+various tools and technologies.
+
+There are some coded applications within this environment, we chose to implement them in Python for simplicity and speed
+to deployment, but the idea is that any Python app here could be re-written in another language.
+
+> All services deployed in the Tech-Terrarium are open source and free to use. The project is intended for educational
+> purposes, and designed to be run on inexpensive commodity hardware like Raspberry Pi's.
+
+## Motivation
+
+I have often found myself digging through past projects to look up how different implementations were accomplished or
+to reference a past approach. I have also commonly found myself re-researching the same things over and over again
+throughout both personal and professional projects. Enter the `Tech-Terrarium`. This project is mostly for my own
+benefit to be able to quickly spin up, look at, and play with different approaches to Data Engineering and Software
+Engineering problems. And, if this helps someone else along the way, then that's a bonus!
+
+That said, if you do find yourself here and have questions, comments, feedback, or suggestions, please feel free to
+reach out or start create an `Issue` or `Pull Request`. If you do make a pull request, please make it against
+the [GitLab Repository]() as the GitHub repository is only a mirror. And, this should go without saying, but please be
+respectful and considerate when making comments or suggestions.
 
 ```mermaid
 graph LR

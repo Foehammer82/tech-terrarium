@@ -2,7 +2,8 @@ pages:
   stage: deploy
   image: python:3.11-slim
   script:
-    - pip install mkdocs-material
+    - pip install poetry
+    - poetry install --only docs
     - mkdocs build --site-dir public
   artifacts:
     paths:
