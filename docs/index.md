@@ -1,4 +1,11 @@
-# Foehammer's Tech-Terrarium
+# Tech-Terrarium
+
+**Documentation**:
+<a href="https://tech-terrarium.foehammer.dev/" target="_blank">https://tech-terrarium.foehammer.dev/</a>
+
+**Source Code**:
+<a href="https://github.com/Foehammer82/tech-terrarium" target="_blank">https://github.com/Foehammer82/tech-terrarium</a>
+
 
 The Tech-Terrarium is a comprehensive ecosystem of services designed for testing, learning, and development
 purposes. The project aims to simulate a tech stack in a small local environment, providing a hands-on experience with
