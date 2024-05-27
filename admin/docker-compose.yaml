@@ -20,7 +20,19 @@ services:
     environment:
       GLANCES_OPT: "--webserver"
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - admin
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    restart: unless-stopped
+    volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
+    ports:
+      - "8000:8000"
+      - "8443:9443"
     networks:
       - admin
 
@@ -30,4 +42,4 @@ networks:
     name: terrarium
 
 volumes:
-  uptime-kuma-data:
+  portainer-data:

@@ -2,13 +2,14 @@ title: Tech-Terrarium
 background:
   image: /images/terrarium_bg.png
   opacity: 60
-favicon: /images/favicon.png
+favicon: /images/favicon.ico
 cardBlur: sm
 theme: dark
 color: slate
 hideVersion: true
 headerStyle: clean
-showStats: false
+showStats: true
+fiveColumns: true
 
 layout:
   Admin:
@@ -16,8 +17,28 @@ layout:
     columns: 3
     useEqualHeights: true
     disableCollapse: true
-  Services:
-    style: "row"
-    columns: 4
+
+  Data Stores:
+    style: "columns"
+    useEqualHeights: true
+    disableCollapse: true
+  Application Frameworks:
+    style: "columns"
+    useEqualHeights: true
+    disableCollapse: true
+  Orchestration:
+    style: "columns"
+    useEqualHeights: true
+    disableCollapse: true
+  ETL/ELT:
+    style: "columns"
+    useEqualHeights: true
+    disableCollapse: true
+  Machine Learning:
+    style: "columns"
+    useEqualHeights: true
+    disableCollapse: true
+  BI Tools & Data-Cataloging:
+    style: "columns"
     useEqualHeights: true
     disableCollapse: true

@@ -1,4 +1,10 @@
-start-all: start-kafka start-postgres start-mongo start-redis start-fastapi-app start-airflow start-metabase
+start-all: start-admin start-kafka start-postgres start-mongo start-redis start-fastapi-app start-airflow start-metabase
+
+# Admin
+start-admin:
+	docker-compose -f admin/docker-compose.yaml -p admin up -d --force-recreate
+stop-admin:
+	docker-compose -f admin/docker-compose.yaml -p admin down
 
 # Kafka
 start-kafka:

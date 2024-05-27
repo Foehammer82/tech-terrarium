@@ -21,6 +21,7 @@ services:
       - "8085:8081"
     networks:
       - redis
+      - terrarium
     depends_on:
       - redis
 
