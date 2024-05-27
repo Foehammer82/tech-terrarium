@@ -1,0 +1,18 @@
+source:
+  type: "postgres"
+  config:
+    connect_uri: "mongodb://mongo:27017"
+
+    # Credentials
+    username: admin
+    password: password
+    authMechanism: "DEFAULT"
+
+    # Options
+    enableSchemaInference: True
+    useRandomSampling: True
+    maxSchemaSize: 300
+sink:
+  type: "datahub-rest"
+  config:
+    server: "http://datahub-gms:8080"

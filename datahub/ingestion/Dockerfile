@@ -3,21 +3,25 @@ FROM python:3.11-slim
 # Install dependencies
 RUN pip install acryl-datahub[kafka,kafka-connect,mongodb,postgres,metabase,dbt,mlflow,datahub-rest]
 
+# Install OpenJDK 11
+RUN apt-get update \
+ && apt-get upgrade -y \
+ && apt-get install -y cron default-jre #software-properties-common openjdk-11-jdk
+RUN java -version
+
 # Set ENV variables
 COPY ingestion_configs /ingestion_configs
 ENV INGESTION_CONFIGS_DIR = "/ingestion_configs"
 
 # Copy application files
 COPY do_ingestion.sh ./do_ingestion.sh
+COPY crontab /etc/cron.d/dh-ingestion-cron
 
-# TODO: get this moved into a crontab task that will run indefinitely on a schedule
-# Run the ingestion script right away, and then every xx minutes
-CMD ./do_ingestion.sh
-# && */30 * * * * ./do_ingestion.sh
-#    -   - - - -
-#    |   | | | |
-#    |   | | | ----- Day of the week (0 - 7) (Sunday=0 or 7)
-#    |   | | ------- Month (1 - 12)
-#    |   | --------- Day of the month (1 - 31)
-#    |   ----------- Hour (0 - 23)
-#      ------------- Minute (0 - 59)
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/dh-ingestion-cron
+
+# Apply cron job
+RUN crontab /etc/cron.d/dh-ingestion-cron
+
+# Run the command on container startup
+CMD ./do_ingestion.sh && cron -f

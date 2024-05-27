@@ -6,7 +6,7 @@
         siteMonitor: https://foehammer82.github.io/tech-terrarium/
     - Portainer:
         icon: portainer
-        description: Manage your Docker environment
+        description: "WebUI for Docker Administration"
         href: https://localhost:8443/
         container: admin-portainer-1
     - Glances:

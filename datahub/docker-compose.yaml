@@ -6,8 +6,10 @@ services:
       dockerfile: Dockerfile
     restart: on-failure
     networks:
-      - datahub
       - terrarium
+    depends_on:
+      gms:
+        condition: service_healthy
 
   # DATAHUB
   frontend:
@@ -200,7 +202,7 @@ services:
       - datahub
   
   # KAFKA
-  broker:
+  dh-broker:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_NODE_ID: 1
@@ -232,9 +234,9 @@ services:
     networks:
       - datahub
   
-  schema-registry:
+  dh-schema-registry:
     depends_on:
-      broker:
+      dh-broker:
         condition: service_healthy
     environment:
       - SCHEMA_REGISTRY_HOST_NAME=schemaregistry
@@ -255,9 +257,9 @@ services:
   
   kafka-setup:
     depends_on:
-      broker:
+      dh-broker:
         condition: service_healthy
-      schema-registry:
+      dh-schema-registry:
         condition: service_healthy
     environment:
       - DATAHUB_PRECREATE_TOPICS=false
