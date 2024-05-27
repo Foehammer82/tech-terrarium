@@ -1,4 +1,61 @@
 site_name: Foehammer's Tech-Terrarium Docs
 site_url: http://localhost:8089
+repo_url: https://github.com/Foehammer82/tech-terrarium
+
 theme:
   name: material
+  logo: assets/terrarium_icon.png
+  favicon: assets/favicon.ico
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tabs
+    - navigation.sections # flat is better than nested
+    - navigation.path
+    - search.suggest
+    - search.highlight
+    - search.share
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: green
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue grey
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+#extra:
+#  homepage: https://Foehammer82.gitlab.io/tech-terrarium
+
+markdown_extensions:
+  - abbr
+  - attr_list
+  - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - tables
+  - footnotes
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+plugins:
+  - search
+
