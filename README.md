@@ -132,17 +132,12 @@ Alternatives: Apache Spark, Talend, Matillion
 
 ## TODO
 
-- [ ] set up a mkdocs site to document the terrarium
+- [x] set up a mkdocs site to document the terrarium
 - [ ] add pre-commit checks to the project
 - [ ] set up the FastAPI to utilize redis caching so that we can see data moving into redis and then utilize that data
   elsewhere
-- [ ] gRPC service that can be interacted with from the FastAPI app. this would be a hello world like service to
-  demo how it might work.
-- [ ] set up a project homepage using [Homepage](https://github.com/gethomepage/homepage) or something similar to make a
+- [x] set up a project homepage using [Homepage](https://github.com/gethomepage/homepage) or something similar to make a
   single point of entry for all the services in the Terrarium.
-- [ ] setup dashboarding/tracking of the terrarium
-    - thinking of using InfluxDB since it's so easy to set up and versatile and can plug into prom endpoints and has a
-      TON of integrations for monitoring.
 - [ ] Kafka Connectors
     - [PostgreSQL Sink](https://docs.confluent.io/cloud/current/connectors/cc-postgresql-sink.html)
     - [GitHub Source](https://docs.confluent.io/cloud/current/connectors/cc-github-source.html)
@@ -154,7 +149,7 @@ Alternatives: Apache Spark, Talend, Matillion
     - would be neat to see if it's possible or how much effort it would be to set up a GraphQL interface to Flink to
       enable querying of kafka data from a web client. but really just want to get a little more familiar with Flink as
       I've seen it referenced a few times now from large sources (i.e. Confluent)
-- [ ] setup example python snypits in the kafka directory
+- [ ] setup example python snippets in the kafka directory
     - basic dict/pydantic producer
     - avro producer (using pydantic)
     - basic consumer
@@ -173,9 +168,13 @@ Alternatives: Apache Spark, Talend, Matillion
     - see about setting up apache iceberg locally and having Spark operate on it.
 - [ ] implement DataHub to track metadata of the terrarium
     - would also not be a terrible idea to set up an instance of openmetadata as well.
+- [ ] instead of deploying the docs locally with a container, have them deployed from Gitlab instead and then update the
+  links in the homepage
 
 ## Long Term
 
+- [ ] configure all exposed services to run through a Traefik load balancer
+    - this would be a good exercise in setting up a reverse proxy and load balancer for the terrarium
 - [ ] configure to run everything on kubernetes with helm. the goal is to see if the whole stack can be deployed on 3
   raspberry pi's using k3s.
     - write docs and instructions on setting up the hardware

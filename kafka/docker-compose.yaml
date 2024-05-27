@@ -100,9 +100,10 @@ services:
   kafbat-ui:
     image: ghcr.io/kafbat/kafka-ui:latest
     ports:
-      - 9021:8080
+      - "9021:8080"
     networks:
       - kafka
+      - terrarium
     depends_on:
       - broker
       - schema-registry

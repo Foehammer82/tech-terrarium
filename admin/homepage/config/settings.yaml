@@ -1,7 +1,8 @@
-title: Dark-Water
+title: Tech-Terrarium
 background:
   image: /images/terrarium_bg.png
   opacity: 60
+favicon: /images/favicon.png
 cardBlur: sm
 theme: dark
 color: slate
@@ -10,7 +11,7 @@ headerStyle: clean
 showStats: false
 
 layout:
-  Administration:
+  Admin:
     style: "row"
     columns: 3
     useEqualHeights: true

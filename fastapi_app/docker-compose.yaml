@@ -1,11 +1,13 @@
 services:
-  homepage:
+  fastapi_app:
     build:
-      context: homepage
+      context: .
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "80:3000"
+      - "8084:8000"
+    networks:
+      - terrarium
     environment:
       PUID: 1001
       PGID: 1001

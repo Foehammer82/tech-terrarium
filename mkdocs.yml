@@ -1,0 +1,4 @@
+site_name: Foehammer's Tech-Terrarium Docs
+site_url: http://localhost:8089
+theme:
+  name: material

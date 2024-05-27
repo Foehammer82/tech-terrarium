@@ -4,6 +4,9 @@ services:
     restart: always
     ports:
       - "27017:27017"
+    networks:
+      - mongo
+      - terrarium
     volumes:
       - mongo-data:/data/db
 
@@ -12,6 +15,9 @@ services:
     restart: on-failure
     ports:
       - "8086:8081"
+    networks:
+      - mongo
+      - terrarium
     environment:
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_MONGODB_PORT: 27017
@@ -22,3 +28,8 @@ services:
 
 volumes:
   mongo-data:
+
+networks:
+  mongo:
+  terrarium:
+    name: terrarium

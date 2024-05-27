@@ -9,3 +9,8 @@
       dateStyle: short
       timeStyle: short
       hourCycle: h23
+- glances:
+    url: http://glances:61208
+    cpu: true
+    mem: true
+    expanded: true

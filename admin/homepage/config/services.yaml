@@ -1,0 +1,37 @@
+- Admin:
+    - MkDocs:
+        icon: /images/mkdocs-material.png
+        description: Tech-Terrarium Documentation
+        href: http://localhost:8089
+        container: admin-docs-1
+    - Portainer:
+        icon: portainer
+        description: Manage your Docker environment
+        href: http://localhost:8443/
+        container: admin-portainer-1
+    - Glances:
+        icon: glances
+        description: System stats monitoring
+        href: http://localhost:61208/
+        container: admin-glances-1
+
+- Services:
+    - Kafka Admin (Kafbat-UI):
+        icon: /images/kafbat_icon.png
+        href: http://localhost:3030/
+    - Postgres (pgAdmin):
+        icon: postgres
+        href: http://localhost:5050/
+    - MongoDB (Mongo-Express):
+        icon: mongodb
+        href: http://localhost:8086/
+    - Airflow:
+        icon: /images/airflow_icon.png
+        href: http://localhost:8080/
+    - FastAPI App:
+        icon: /images/fastapi_icon.svg
+        href: http://localhost:8084/
+    - Metabase:
+        icon: metabase
+        href: http://localhost:3000
+

@@ -22,6 +22,7 @@ services:
       - "8888:80"
     networks:
       - postgres
+      - terrarium
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@nowhere.com
       PGADMIN_DEFAULT_PASSWORD: password
