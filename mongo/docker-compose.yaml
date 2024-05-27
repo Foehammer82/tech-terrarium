@@ -1,6 +1,6 @@
 services:
   mongo:
-    image: mongo:latest
+    image: mongo:7
     restart: always
     ports:
       - "27017:27017"
@@ -9,6 +9,7 @@ services:
       - terrarium
     volumes:
       - mongo-data:/data/db
+      - ./mongo_init/:/docker-entrypoint-initdb.d/:ro
 
   mongo-express:
     image: mongo-express:latest

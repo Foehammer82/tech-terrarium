@@ -2,7 +2,7 @@
   "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
   "key.converter": "org.apache.kafka.connect.storage.StringConverter",
   "kafka.topic": "datagen_device_information",
-  "max.interval": 750,
+  "max.interval": 10000,
   "quickstart": "device_information",
   "tasks.max": 1
 }

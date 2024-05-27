@@ -1,17 +1,16 @@
 {
   "connector.class": "JdbcSinkConnector",
   "input.data.format": "AVRO",
-  "connection.url": "jdbc:postgresql://postgres:5432/postgres",
+  "connection.url": "jdbc:postgresql://postgres:5432/datagen",
   "connection.user": "postgres",
   "connection.password": "password",
   "dialect.name": "PostgreSqlDatabaseDialect",
-  "db.name": "postgres",
+  "db.name": "datagen",
   "topics": "datagen_device_information",
   "insert.mode": "UPSERT",
   "db.timezone": "UTC",
   "auto.create": "true",
   "auto.evolve": "true",
-  "pk.mode": "record_value",
-  "pk.fields": "device_ip",
+  "pk.mode": "kafka",
   "tasks.max": "1"
 }

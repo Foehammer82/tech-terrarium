@@ -1,0 +1,7 @@
+{
+  "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
+  "connection.uri": "mongodb://mongo:27017",
+  "database": "DataGen",
+  "topics": "datagen_device_information",
+  "tasks.max": "1"
+}
