@@ -4,7 +4,7 @@ repo_url: https://github.com/Foehammer82/tech-terrarium
 
 theme:
   name: material
-  logo: assets/terrarium_icon.png
+  logo: assets/terrarium.png
   favicon: assets/favicon.ico
   features:
     - toc.integrate
