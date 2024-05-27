@@ -18,7 +18,7 @@
 - Data Stores:
     - Kafka (Kafbat-UI):
         icon: /images/kafka_icon.png
-        href: http://localhost:3030/
+        href: http://localhost:9021/
         container: kafka-kafbat-ui-1
     - Postgres (pgAdmin):
         icon: postgres
@@ -48,6 +48,7 @@
 - Orchestration:
     - Airflow:
         icon: /images/airflow_icon.png
+        description: "username: airflow \npassword:airflow"
         href: http://localhost:8080/
         container: airflow-airflow-webserver-1
 

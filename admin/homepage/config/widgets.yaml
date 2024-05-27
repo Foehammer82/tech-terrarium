@@ -2,7 +2,7 @@
     icon: /images/terrarium_icon.png
 - greeting:
     text_size: xl
-    text: Foehammer's Tech-Terrarium
+    text: Tech-Terrarium
 - datetime:
     text_size: xl
     format:

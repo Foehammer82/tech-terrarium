@@ -5,9 +5,14 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "8084:8000"
+      - "8084:9000"
     networks:
       - terrarium
     environment:
       PUID: 1001
       PGID: 1001
+
+networks:
+  fastapi_app:
+  terrarium:
+    name: terrarium

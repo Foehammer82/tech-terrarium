@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from audit import Auditor, initialize_starlette_middleware
 from models import Foo
 
+# TODO: verify kafka broker is reachable if not, log warning (or error) and continue without initializing the auditor
 auditor = Auditor(
     kafka_brokers="localhost:9092",
     schema_registry_url="http://localhost:8081",
@@ -19,6 +20,9 @@ initialize_starlette_middleware(
     response_audit_topic="fastapi-responses-v1",
 )
 
+# TODO: get a simple arq RPC server/client working with this so we can test how that might work with auditng and
+#       pushing out work to other services.
+
 
 @app.get("/foo")
 def read_root(bar: str, baz: int) -> Foo:
@@ -28,4 +32,4 @@ def read_root(bar: str, baz: int) -> Foo:
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)  # noqa: B104
+    uvicorn.run(app, host="0.0.0.0", port=9000)  # noqa: B104

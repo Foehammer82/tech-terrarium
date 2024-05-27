@@ -20,7 +20,7 @@ layout:
 
   Bookmarks:
     style: "row"
-    columns: 3
+    columns: 5
     useEqualHeights: true
     disableCollapse: true
 

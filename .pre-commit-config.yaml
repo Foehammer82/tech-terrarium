@@ -25,6 +25,7 @@ repos:
     hooks:
       - id: poetry-check
       - id: poetry-lock
+      # Create/Update requirements.txt for FastAPI App
       - id: poetry-export
         args: [ "-f", "requirements.txt", "-o", "./fastapi_app/requirements.txt", "--only", "main,test", "--without-hashes" ]
         verbose: true
