@@ -18,8 +18,7 @@ Feast for managing features in machine learning models.
 
 The project is designed to run on inexpensive hardware like Raspberry Pis and is open source, free to use, and intended
 for educational purposes. It serves as a reference for developers to revisit different implementations and approaches to
-Data Engineering and Software Engineering problems. The project encourages feedback and contributions via Issues or Pull
-Requests on its GitLab repository.
+Data Engineering and Software Engineering problems.
 
 ## Motivation
 
@@ -30,8 +29,7 @@ benefit to be able to quickly spin up, look at, and play with different approach
 Engineering problems. And, if this helps someone else along the way, then that's a bonus!
 
 That said, if you do find yourself here and have questions, comments, feedback, or suggestions, please feel free to
-reach out or start create an `Issue` or `Pull Request`. If you do make a pull request, please make it against
-the [GitLab Repository]() as the GitHub repository is only a mirror. And, this should go without saying, but please be
+reach out or start create an `Issue` or `Pull Request`.  And, this should go without saying, but please be
 respectful and considerate when making comments or suggestions.
 
 ## Project Architecture
@@ -104,8 +102,6 @@ graph LR
     - see about setting up apache iceberg locally and having Spark operate on it.
 - [ ] implement DataHub to track metadata of the terrarium
     - would also not be a terrible idea to set up an instance of openmetadata as well.
-- [ ] instead of deploying the docs locally with a container, have them deployed from Gitlab instead and then update the
-  links in the homepage
 
 ## Long Term
 

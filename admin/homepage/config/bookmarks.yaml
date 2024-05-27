@@ -1,8 +1,5 @@
 ---
 - Bookmarks:
-    - Gitlab Repo:
-        - icon: gitlab
-          href: https://gitlab.com/Foehammer82/tech-terrarium
-    - Github Repo (gitlab-mirrored):
+    - Github Repo:
         - icon: github
           href: https://github.com/Foehammer82/tech-terrarium
