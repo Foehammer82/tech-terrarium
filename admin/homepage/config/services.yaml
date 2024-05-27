@@ -52,11 +52,6 @@
         href: http://localhost:8080/
         container: airflow-airflow-webserver-1
 
-- ETL/ELT:
-    - DBT:
-        icon: /images/dbt_icon.png
-        description: NOT IMPLEMENTED YET
-
 - Machine Learning:
     - Feast:
         icon: /images/feast_icon.png
