@@ -68,4 +68,5 @@
     - Metabase:
         icon: metabase
         href: http://localhost:3000
+        description: "un/pw: admin@not.com/1terrarium"
         container: metabase-metabase-1

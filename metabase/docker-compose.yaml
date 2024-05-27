@@ -1,4 +1,6 @@
 services:
+  # Username: admin@not.com
+  # Password: 1terrarium
   metabase:
     image: metabase/metabase:v0.49.11
     ports:
