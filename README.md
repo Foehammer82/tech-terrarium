@@ -188,3 +188,8 @@ Alternatives: Apache Spark, Talend, Matillion
       main goal for me. will take a look at using flink next for stream processing. Definatly a nice tool, but the
       given the overhead of setting it up, it's not worth it for this project, and would be a tough to consider
       pushing for in an enterprise environment without a clear need (don't need a solution looking for a problem).
+
+## Credits
+
+- Terrarium Icon: <a href="https://www.flaticon.com/free-icons/terrarium" title="terrarium icons">Terrarium icons created by Freepik -
+  Flaticon</a>
