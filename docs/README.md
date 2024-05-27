@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="./"><img src="./assets/terrarium_icon.png" alt="Tech-Terrarium" width="200"></a>
+</p>
+
 # Tech-Terrarium
 
 **Documentation**:
