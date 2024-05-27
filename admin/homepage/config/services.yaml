@@ -2,8 +2,8 @@
     - MkDocs:
         icon: /images/mkdocs-material.png
         description: Documentation for the Tech-Terrarium
-        href: https://tech-terrarium.foehammer.dev/
-        siteMonitor: https://tech-terrarium.foehammer.dev/
+        href: https://foehammer82.github.io/tech-terrarium/
+        siteMonitor: https://foehammer82.github.io/tech-terrarium/
     - Portainer:
         icon: portainer
         description: Manage your Docker environment
