@@ -24,14 +24,6 @@ services:
     networks:
       - admin
 
-  docs:
-    build:
-      context: ../
-      dockerfile: mkdocs.Dockerfile
-    restart: on-failure
-    ports:
-      - "8089:8000"
-
 networks:
   admin:
   terrarium:
