@@ -29,15 +29,21 @@ respectful and considerate when making comments or suggestions.
 
 ```mermaid
 graph LR
-    A[FastAPI] -->|Sends Audit Data To| B[Kafka]
+    
+    A[FastAPI App] -->|Sends Audit Data To| B[Kafka]
     B -->|Interacts with| D[PostgreSQL Sink Connector]
+    A -->|Interacts With| E
     D -->|Ingests data into| E[PostgreSQL]
-    E -->|Admin Web Interface| F[pgAdmin]
     Q -->|Tracks metadata of| E
     G[Feast] -->|Offline Feature Store| E
     G -->|Online Feature Store| V[Redis]
     E -->|Data Analytics Source For| H[Metabase]
-    T[MlFlow] -->|Models Use Feature Store| G
+    U -->|Uses Feature Store| G
+    A -->|Interacts With| U
+    A -->|Interacts With| I
+    I -->|Data Analytics Source For| H
+    T[MlFlow] -->|Manages Lifecycle for| U(Model)
+    U -->|Sends Audit Data To| B
     Q[DataHub / OpenMetadata] -->|Tracks metadata of| I[MongoDB]
     Q -->|Tracks metadata of| H
     Q -->|Tracks metadata of| O[Airflow]
@@ -46,10 +52,10 @@ graph LR
     Q -->|Tracks metadata of| B
     Q -->|Tracks metadata of| P[DBT]
     Q -->|Tracks metadata of| G
+    Q -->|Tracks metadata of| A
     O -->|Orchestrates| P
     P -->|Operates on| E
-    I -->|Admin Web Interface| J[Mongo Express]
-    I -->|Data Analytics Source For| H
+    
 ```
 
 ## MVP Roadmap
