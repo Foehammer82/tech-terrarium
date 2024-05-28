@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: dbt_device_information
+    description: "A starter dbt model based on datagen data"
+    columns:
+      - name: device_ip
+        description: "IP Address for a device"
+        data_tests:
+          - not_null
+      - name: mac_address
+      - name: owner
+        description: person who owns the given device
+
+  - name: dbt_just_that_one
+    description: "A starter dbt model"
+    columns:
+      - name: device_ip
+        description: "IP Address for a device"
+        data_tests:
+          - not_null
+      - name: mac_address
+      - name: owner
+        description: person who owns the given device

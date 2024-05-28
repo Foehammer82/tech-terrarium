@@ -30,7 +30,6 @@ respectful and considerate when making comments or suggestions.
 ```mermaid
 graph LR
     A[FastAPI] -->|Sends Audit Data To| B[Kafka]
-    C[Flink] -->|Stateful Computations With| B
     B -->|Interacts with| D[PostgreSQL Sink Connector]
     D -->|Ingests data into| E[PostgreSQL]
     E -->|Admin Web Interface| F[pgAdmin]
@@ -49,7 +48,6 @@ graph LR
     Q -->|Tracks metadata of| G
     O -->|Orchestrates| P
     P -->|Operates on| E
-    A -->|Interacts with| C
     I -->|Admin Web Interface| J[Mongo Express]
     I -->|Data Analytics Source For| H
 ```
@@ -77,12 +75,7 @@ graph LR
       etc.)
     - see about setting up apache iceberg locally and having Spark operate on it.
 - [ ] implement openmetadata with the same setup as datahub
-- [ ] Set up Flink
-    - https://flink.apache.org/
-    - https://docs.confluent.io/cloud/current/flink/overview.html
-    - would be neat to see if it's possible or how much effort it would be to set up a GraphQL interface to Flink to
-      enable querying of kafka data from a web client. but really just want to get a little more familiar with Flink as
-      I've seen it referenced a few times now from large sources (i.e. Confluent)
+- [ ] create some endpoints in the FastAPI app that query topics using KSQL
 - [ ] dig deeper into MlFlow to expand knowledge and experience with building and releasing models.
     - might be worth setting up a feast repo/project for online/offline features stores for a model utilizing postgres
       and redis for practice.

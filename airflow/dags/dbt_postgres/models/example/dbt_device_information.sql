@@ -9,16 +9,17 @@
 
 {{ config(materialized='table') }}
 
-with source_data as (
+with device_information_1 as (
 
-    select 1 as id
-    union all
-    select null as id
+    select device_ip,
+           mac_address,
+           owner
+    from datagen.public.datagen_device_information
 
 )
 
 select *
-from source_data
+from device_information_1
 
 /*
     Uncomment the line below to remove records with null `id` values
