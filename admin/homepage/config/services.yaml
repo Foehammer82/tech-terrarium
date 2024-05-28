@@ -1,4 +1,8 @@
 - Admin:
+    - GitHub:
+        icon: github
+        description: "Tech-Terrarium Git Repository"
+        href: https://github.com/Foehammer82/tech-terrarium
     - MkDocs:
         icon: /images/mkdocs-material.png
         description: Documentation for the Tech-Terrarium

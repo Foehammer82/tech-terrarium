@@ -14,13 +14,7 @@ fiveColumns: true
 layout:
   Admin:
     style: "row"
-    columns: 3
-    useEqualHeights: true
-    disableCollapse: true
-
-  Bookmarks:
-    style: "row"
-    columns: 5
+    columns: 4
     useEqualHeights: true
     disableCollapse: true
 
