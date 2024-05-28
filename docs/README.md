@@ -38,7 +38,7 @@ graph LR
     G[Feast] -->|Offline Feature Store| E
     G -->|Online Feature Store| V[Redis]
     E -->|Data Analytics Source For| H[Metabase]
-    T[MlFlow] -->|Feature Store| G
+    T[MlFlow] -->|Models Use Feature Store| G
     Q[DataHub / OpenMetadata] -->|Tracks metadata of| I[MongoDB]
     Q -->|Tracks metadata of| H
     Q -->|Tracks metadata of| O[Airflow]

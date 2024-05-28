@@ -76,6 +76,8 @@ Alternatives: Apache Atlas, Amundsen, Data Catalog, OpenMetadata, Alation
 
 ### DBT - Data Transformation Tool
 
+[Official Docs]()
+
 Data transformation tool that is used for transforming data in the data warehouse. It is used for writing SQL queries
 to transform data and create data models.
 
