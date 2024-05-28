@@ -30,20 +30,21 @@ respectful and considerate when making comments or suggestions.
 ```mermaid
 graph LR
     A[FastAPI App] -->|Sends Audit Data To| B[Kafka]
-    B -->|Interacts with| D[PostgreSQL Sink Connector]
+    B -->|Streams Data To| D[PostgreSQL Sink Connector]
     A -->|Interacts With| E
-    D -->|Ingests data into| E[PostgreSQL]
+    D -->|Streams Data Into| E[PostgreSQL]
     Q -->|Tracks metadata of| E
     G[Feast] -->|Offline Feature Store| E
     G -->|Online Feature Store| V[Redis]
-    E -->|Data Analytics Source For| H[Metabase]
-    U -->|Uses Feature Store| G
+    H[Metabase] -->|BI Data Analytics Against| E
+    U -->|Gets Features From| G
     A -->|Interacts With| U
-    A -->|Interacts With| I
-    I -->|Data Analytics Source For| H
+    H -->|BI Data Analytics Against| I
     T[MlFlow] -->|Manages Lifecycle for| U(Model)
     U -->|Sends Audit Data To| B
-    Q[DataHub / OpenMetadata] -->|Tracks metadata of| I[MongoDB]
+    F[MongoDB Sink Connector] -->|Streams Data Into| I
+    B-->|Streams Data To| F
+    Q[DataHub] -->|Tracks metadata of| I[MongoDB]
     Q -->|Tracks metadata of| H
     Q -->|Tracks metadata of| O[Airflow]
     Q -->|Tracks metadata of| T

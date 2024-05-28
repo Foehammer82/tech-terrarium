@@ -35,11 +35,6 @@
         href: http://localhost:8086/
         description: "un/pw: admin/password"
         container: mongo-mongo-express-1
-    - Redis (Redis-Commander):
-        icon: redis
-        href: http://localhost:8085/
-        description: "un/pw: NONE"
-        container: redis-redis-commander-1
     - Spark:
         icon: /images/spark_icon.png
         description: "NOT IMPLEMENTED YET"
@@ -49,9 +44,9 @@
         icon: /images/fastapi_icon.svg
         href: http://localhost:8084/
     - FastAPI App (Admin):
-          icon: /images/fastapi_icon.svg
-          href: http://localhost:8084/
-          description: NOT IMPLEMENTED YET
+        icon: /images/fastapi_icon.svg
+        href: http://localhost:8084/
+        description: NOT IMPLEMENTED YET
 
 - Orchestration & ETL/ELT:
     - Airflow:
@@ -74,9 +69,6 @@
         description: "un/pw: datahub/datahub"
         href: http://localhost:9002/
         container: datahub-frontend-1
-    - OpenMetadata:
-          icon: /images/openmetadata_icon.png
-          description: "NOT IMPLEMENTED YET"
     - Metabase:
         icon: metabase
         href: http://localhost:3000
