@@ -1,2 +1,13 @@
+apache-airflow-providers-celery
+apache-airflow-providers-postgres
+apache-airflow-providers-mongo
+apache-airflow-providers-apache-kafka
+
+boto3
+botocore
+paramiko
+airflow.providers.dbt
+Faker
 dbt-core~=1.8.1
 dbt-postgres~=1.8.1
+acryl-datahub-airflow-plugin[plugin-v2]~=0.13.2.4
