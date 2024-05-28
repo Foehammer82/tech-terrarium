@@ -1,4 +1,9 @@
-start-all: start-admin start-kafka start-postgres start-mongo start-redis start-fastapi-app start-airflow start-metabase
+start-all: start-admin start-kafka start-postgres start-mongo start-fastapi-app start-airflow start-metabase start-datahub
+stop-all: stop-admin stop-kafka stop-postgres stop-mongo stop-fastapi-app stop-airflow stop-metabase stop-datahub
+
+# Clean up
+cleanup:
+	docker system prune -a -f
 
 # Admin
 start-admin:
@@ -24,17 +29,11 @@ start-mongo:
 stop-mongo:
 	docker-compose -f mongo/docker-compose.yaml -p mongo down
 
-# Redis
-start-redis:
-	docker-compose -f redis/docker-compose.yaml -p redis up -d --force-recreate
-stop-redis:
-	docker-compose -f redis/docker-compose.yaml -p redis down
-
 # FastAPI App
 start-fastapi-app:
-	docker-compose -f fastapi/docker-compose.yaml -p fastapi-app up -d --force-recreate
+	docker-compose -f fastapi_app/docker-compose.yaml -p fastapi-app up -d --force-recreate
 stop-fastapi-app:
-	docker-compose -f fastapi/docker-compose.yaml -p fastapi-app down
+	docker-compose -f fastapi_app/docker-compose.yaml -p fastapi-app down
 
 # Airflow
 start-airflow:
@@ -47,3 +46,9 @@ start-metabase:
 	docker-compose -f metabase/docker-compose.yaml -p metabase up -d --force-recreate
 stop-metabase:
 	docker-compose -f metabase/docker-compose.yaml -p metabase down
+
+# Datahub
+start-datahub:
+	docker-compose -f datahub/docker-compose.yaml -p datahub up -d --force-recreate
+stop-datahub:
+	docker-compose -f datahub/docker-compose.yaml -p datahub down

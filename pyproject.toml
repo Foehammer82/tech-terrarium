@@ -31,7 +31,6 @@ mkdocs-material = "^9.5.24"
 mkdocs-jupyter = "^0.24.7"
 mkdocs-awesome-pages-plugin = "^2.9.2"
 
-
 [tool.poetry.group.dbt.dependencies]
 dbt-core = "^1.8.1"
 dbt-postgres = "^1.8.1"
