@@ -13,17 +13,6 @@
 The Tech-Terrarium is a compact, hands-on tech stack simulation for learning and development. It features Python
 applications for quick deployment, but they can be re-written in other languages.
 
-The project includes services like FastAPI, Redis, Kafka, PostgreSQL, Flink, MongoDB, Airflow, DBT,
-DataHub/OpenMetadata, MlFlow, and Feast. FastAPI is used for building APIs, Kafka for real-time data
-streaming, and PostgreSQL for data storage. Flink is used for stateful computations on data streams, and MongoDB is
-another database option. Airflow is used for orchestrating workflows, and DBT for transforming data in your data
-warehouse. DataHub/OpenMetadata is used for tracking metadata, MlFlow for managing the machine learning lifecycle, and
-Feast for managing features in machine learning models.
-
-The project is designed to run on inexpensive hardware like Raspberry Pis and is open source, free to use, and intended
-for educational purposes. It serves as a reference for developers to revisit different implementations and approaches to
-Data Engineering and Software Engineering problems.
-
 ## Motivation
 
 I have often found myself digging through past projects to look up how different implementations were accomplished or
