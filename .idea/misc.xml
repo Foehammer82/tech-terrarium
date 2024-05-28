@@ -4,5 +4,5 @@
     <option name="enabledOnReformat" value="true" />
     <option name="sdkName" value="Poetry (tech-terrarium)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (tech-terrarium)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Poetry (tech-terrarium)" project-jdk-type="Python SDK" />
 </project>

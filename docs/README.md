@@ -33,39 +33,36 @@ benefit to be able to quickly spin up, look at, and play with different approach
 Engineering problems. And, if this helps someone else along the way, then that's a bonus!
 
 That said, if you do find yourself here and have questions, comments, feedback, or suggestions, please feel free to
-reach out or start create an `Issue` or `Pull Request`.  And, this should go without saying, but please be
+reach out or start create an `Issue` or `Pull Request`. And, this should go without saying, but please be
 respectful and considerate when making comments or suggestions.
 
 ## Project Architecture
 
 ```mermaid
 graph LR
-    A[FastAPI] -->|Caches Data To| B[Redis]
-    A -->|Interacts with| D[Kafka]
-    F[GitHub Source Connector] -->|Feeds Data To| D
-    D -->|Interacts with| E[PostgreSQL Sink Connector]
-    E -->|Ingests data into| L[PostgreSQL]
-    U -->|Offline Feature Store| L
-    L -->|Admin Web Interface| M[pgAdmin]
-    A -->|Interacts with| G
-    D -->|Stateful Computations With| G[Flink]
-    L -->|Data Analytics Source For| K[Metabase]
-    I[MongoDB] -->|Admin Web Interface| J[Mongo Express]
-    I -->|Data Analytics Source For| K
-    O[Airflow] -->|Orchestrates| P[DBT]
-    P -->|Operates on| L
-    Q[DataHub / OpenMetadata] -->|Tracks metadata of| B
-    Q -->|Tracks metadata of| I
-    Q -->|Tracks metadata of| L
-    Q -->|Tracks metadata of| K
-    Q -->|Tracks metadata of| O
-    Q -->|Tracks metadata of| T[MlFlow]
+    A[FastAPI] -->|Sends Audit Data To| B[Kafka]
+    C[Flink] -->|Stateful Computations With| B
+    B -->|Interacts with| D[PostgreSQL Sink Connector]
+    D -->|Ingests data into| E[PostgreSQL]
+    E -->|Admin Web Interface| F[pgAdmin]
     Q -->|Tracks metadata of| E
+    G[Feast] -->|Offline Feature Store| E
+    G -->|Online Feature Store| V[Redis]
+    E -->|Data Analytics Source For| H[Metabase]
+    T[MlFlow] -->|Feature Store| G
+    Q[DataHub / OpenMetadata] -->|Tracks metadata of| I[MongoDB]
+    Q -->|Tracks metadata of| H
+    Q -->|Tracks metadata of| O[Airflow]
+    Q -->|Tracks metadata of| T
     Q -->|Tracks metadata of| D
-    Q -->|Tracks metadata of| P
-    Q -->|Tracks metadata of| U
-    T -->|Feature Store| U[Feast]
-    U -->|Online Feature Store| B
+    Q -->|Tracks metadata of| B
+    Q -->|Tracks metadata of| P[DBT]
+    Q -->|Tracks metadata of| G
+    O -->|Orchestrates| P
+    P -->|Operates on| E
+    A -->|Interacts with| C
+    I -->|Admin Web Interface| J[Mongo Express]
+    I -->|Data Analytics Source For| H
 ```
 
 ## MVP Roadmap
@@ -90,6 +87,7 @@ graph LR
     - avro consumer
     - async usage example
 - [x] set up a Makefile to make it easier to run the services and start the Terrarium, parts of the terrarium.
+- [ ] set up an open-metadata instance to compare it against DataHub
 - [ ] build out the airflow instance with DAG's that perform scheduled operations on the rest of the terrarium
     - implement a DBT repo/project to be orchestrated by airflow
 - [ ] setup metabase with some default dashboards for the terrarium

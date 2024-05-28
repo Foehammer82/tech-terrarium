@@ -2,6 +2,15 @@ site_name: Tech-Terrarium Docs
 site_url: https://foehammer82.github.io/tech-terrarium/
 repo_url: https://github.com/Foehammer82/tech-terrarium
 
+nav:
+  - Home: README.md
+  - Getting Started: getting_started.md
+  - Services: services.md
+  - Examples:
+      - ... | examples/*
+  - Notes:
+      - ... | notes/*
+
 theme:
   name: material
   logo: assets/terrarium.png
@@ -61,3 +70,5 @@ markdown_extensions:
 
 plugins:
   - search
+  - awesome-pages
+  - mkdocs-jupyter

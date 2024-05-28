@@ -70,6 +70,9 @@
         description: "un/pw: datahub/datahub"
         href: http://localhost:9002/
         container: datahub-frontend-1
+    - OpenMetadata:
+          icon: /images/openmetadata_icon.png
+          description: "NOT IMPLEMENTED YET"
     - Metabase:
         icon: metabase
         href: http://localhost:3000
