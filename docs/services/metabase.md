@@ -1,6 +1,4 @@
-# BI Tools
-
-## Metabase
+# Metabase
 
 Business intelligence tool that is used for visualizing and analyzing data. It is used for creating dashboards and
 reports.

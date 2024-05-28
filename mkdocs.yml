@@ -5,7 +5,27 @@ repo_url: https://github.com/Foehammer82/tech-terrarium
 nav:
   - Home: README.md
   - Getting Started: getting_started.md
-  - ... | services/*
+  - Services:
+      - Data Catalog:
+          - services/datahub.md
+          - services/openmetadata.md
+          - services/alternative_data_catalogs.md
+      - Data Store:
+          - services/kafka.md
+          - services/postgres.md
+          - services/mongodb.md
+          - services/spark.md
+      - Application Framework:
+          - services/fastapi_app.md
+      - Orchestration & ETL/ELT:
+          - services/airflow.md
+          - services/dbt.md
+      - Machine Learning:
+          - services/feast.md
+          - services/mlflow.md
+      - BI & Analytics:
+          - services/metabase.md
+      - ... | services/*
   - ... | examples/*
   - ... | notes/*
 
@@ -26,6 +46,7 @@ theme:
     - search.share
     - navigation.top
     - navigation.tracking
+    - content.code.copy
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
@@ -71,5 +92,6 @@ markdown_extensions:
 
 plugins:
   - search
-  - awesome-pages
+  - awesome-pages:
+      collapse_single_pages: true
   - mkdocs-jupyter

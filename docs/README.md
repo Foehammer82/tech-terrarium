@@ -5,7 +5,7 @@
 # Tech-Terrarium
 
 **Documentation**:
-<a href="https://tech-terrarium.foehammer.dev/" target="_blank">https://tech-terrarium.foehammer.dev/</a>
+<a href="https://foehammer82.github.io/tech-terrarium/" target="_blank">https://foehammer82.github.io/tech-terrarium/</a>
 
 **Source Code**:
 <a href="https://github.com/Foehammer82/tech-terrarium" target="_blank">https://github.com/Foehammer82/tech-terrarium</a>
@@ -29,7 +29,6 @@ respectful and considerate when making comments or suggestions.
 
 ```mermaid
 graph LR
-    
     A[FastAPI App] -->|Sends Audit Data To| B[Kafka]
     B -->|Interacts with| D[PostgreSQL Sink Connector]
     A -->|Interacts With| E
@@ -55,7 +54,7 @@ graph LR
     Q -->|Tracks metadata of| A
     O -->|Orchestrates| P
     P -->|Operates on| E
-    
+
 ```
 
 ## MVP Roadmap
@@ -70,21 +69,20 @@ graph LR
     - [MongoDB Sink](https://www.mongodb.com/docs/kafka-connector/current/sink-connector/configuration-properties/all-properties/)
 - [x] setup metabase with some default dashboards for the terrarium
 - [x] implement DataHub to track metadata of the terrarium
-- [ ] implement a DBT repo/project to be orchestrated by airflow that does some operations on data within postgres
+- [ ] implement a DBT project to be orchestrated by airflow that does some operations on data within postgres
     - have it both generate and operate on data that it creates and uses and have it operate on datagen data being
       produced from kafka
-- [ ] setup example python snippets to demonstrate interactions with kafka
-- [ ] build out the airflow instance with DAG's that perform scheduled operations on the rest of the terrarium
-- [ ] implement a DBT repo/project to be orchestrated by airflow
+- [ ] setup example python documentation examples to demonstrate interactions with kafka
+- [ ] build out the airflow instance with DAG's that perform scheduled operations on the rest of the services in the
+  terrarium
 - [ ] set up a Spark server and explore that more
     - follow the quick start guide to get a feel for it and operate on local files (testing parquet, csv, json, avro,
       etc.)
     - see about setting up apache iceberg locally and having Spark operate on it.
 - [ ] implement openmetadata with the same setup as datahub
 - [ ] create some endpoints in the FastAPI app that query topics using KSQL
-- [ ] dig deeper into MlFlow to expand knowledge and experience with building and releasing models.
-    - might be worth setting up a feast repo/project for online/offline features stores for a model utilizing postgres
-      and redis for practice.
+- [ ] deploy a model using MLFlow and serve basic features to it from feast
+    - deploy the model as a FastAPI app, and/or as an RPC service, that the main FastAPI app can interact with
 - [ ] get an example built on top of the fastapi app that uses [arq](https://arq-docs.helpmanual.io/) for RPC to show
   another way besides FastAPI to interact between apps. though have it in the FastAPI app so we can use the Swagger UI
   to trigger the RPC calls.
