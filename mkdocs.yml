@@ -25,6 +25,7 @@ nav:
           - services/mlflow.md
       - BI & Analytics:
           - services/metabase.md
+      - services/scrubbed_services.md
       - ... | services/*
   - ... | examples/*
   - ... | notes/*
@@ -92,6 +93,5 @@ markdown_extensions:
 
 plugins:
   - search
-  - awesome-pages:
-      collapse_single_pages: true
+  - awesome-pages
   - mkdocs-jupyter
