@@ -3,14 +3,18 @@
 - greeting:
     text_size: xl
     text: Tech-Terrarium
+- search:
+    provider: custom
+    url: https://foehammer82.github.io/tech-terrarium/?q=
+    target: _blank
+- glances:
+    url: http://glances:61208
+    cpu: true
+    mem: true
+    expanded: true
 - datetime:
     text_size: xl
     format:
       dateStyle: short
       timeStyle: short
       hourCycle: h23
-- glances:
-    url: http://glances:61208
-    cpu: true
-    mem: true
-    expanded: true

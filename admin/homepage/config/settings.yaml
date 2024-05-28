@@ -10,6 +10,13 @@ hideVersion: true
 headerStyle: clean
 showStats: true
 fiveColumns: true
+disableCollapse: true
+
+quicklaunch:
+  searchDescriptions: true
+  hideInternetSearch: false
+  showSearchSuggestions: true
+  hideVisitURL: false
 
 layout:
   Admin:
