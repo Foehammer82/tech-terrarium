@@ -58,39 +58,39 @@ graph LR
 
 - [x] set up a mkdocs site to document the terrarium
 - [x] add pre-commit checks to the project
+- [x] set up a Makefile to make it easier to run the services and start the Terrarium, parts of the terrarium.
 - [x] set up a project homepage using [Homepage](https://github.com/gethomepage/homepage) or something similar to make a
   single point of entry for all the services in the Terrarium.
 - [x] Kafka Connectors
     - [PostgreSQL Sink](https://docs.confluent.io/cloud/current/connectors/cc-postgresql-sink.html)
     - [MongoDB Sink](https://www.mongodb.com/docs/kafka-connector/current/sink-connector/configuration-properties/all-properties/)
+- [x] setup metabase with some default dashboards for the terrarium
+- [x] implement DataHub to track metadata of the terrarium
+- [ ] implement a DBT repo/project to be orchestrated by airflow that does some operations on data within postgres
+    - have it both generate and operate on data that it creates and uses and have it operate on datagen data being
+      produced from kafka
+- [ ] setup example python snippets to demonstrate interactions with kafka
+- [ ] build out the airflow instance with DAG's that perform scheduled operations on the rest of the terrarium
+- [ ] implement a DBT repo/project to be orchestrated by airflow
+- [ ] set up a Spark server and explore that more
+    - follow the quick start guide to get a feel for it and operate on local files (testing parquet, csv, json, avro,
+      etc.)
+    - see about setting up apache iceberg locally and having Spark operate on it.
+- [ ] implement openmetadata with the same setup as datahub
 - [ ] Set up Flink
     - https://flink.apache.org/
     - https://docs.confluent.io/cloud/current/flink/overview.html
     - would be neat to see if it's possible or how much effort it would be to set up a GraphQL interface to Flink to
       enable querying of kafka data from a web client. but really just want to get a little more familiar with Flink as
       I've seen it referenced a few times now from large sources (i.e. Confluent)
-- [ ] setup example python snippets in the kafka directory
-    - basic dict/pydantic producer
-    - avro producer (using pydantic)
-    - basic consumer
-    - avro consumer
-    - async usage example
-- [x] set up a Makefile to make it easier to run the services and start the Terrarium, parts of the terrarium.
-- [ ] set up an open-metadata instance to compare it against DataHub
-- [ ] build out the airflow instance with DAG's that perform scheduled operations on the rest of the terrarium
-    - implement a DBT repo/project to be orchestrated by airflow
-- [ ] setup metabase with some default dashboards for the terrarium
-    - note, if there isn't a way to have the project create defaults on container start, just write instructions for how
-      to build some basic dashboards. but it would be SUPER slick to have a way to do it automatically.
 - [ ] dig deeper into MlFlow to expand knowledge and experience with building and releasing models.
     - might be worth setting up a feast repo/project for online/offline features stores for a model utilizing postgres
       and redis for practice.
-- [ ] set up a Spark server and explore that more
-    - follow the quick start guide to get a feel for it and operate on local files (testing parquet, csv, json, avro,
-      etc.)
-    - see about setting up apache iceberg locally and having Spark operate on it.
-- [ ] implement DataHub to track metadata of the terrarium
-    - would also not be a terrible idea to set up an instance of openmetadata as well.
+- [ ] get an example built on top of the fastapi app that uses [arq](https://arq-docs.helpmanual.io/) for RPC to show
+  another way besides FastAPI to interact between apps. though have it in the FastAPI app so we can use the Swagger UI
+  to trigger the RPC calls.
+- [ ] look into getting examples for [FastUI](https://github.com/pydantic/FastUI) since it uses React and FastAPI to
+  build front ends
 
 ## Long Term
 
