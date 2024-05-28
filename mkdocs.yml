@@ -5,26 +5,27 @@ repo_url: https://github.com/Foehammer82/tech-terrarium
 nav:
   - Home: README.md
   - Getting Started: getting_started.md
-  - Services: services.md
-  - Examples:
-      - ... | examples/*
-  - Notes:
-      - ... | notes/*
+  - ... | services/*
+  - ... | examples/*
+  - ... | notes/*
 
 theme:
   name: material
   logo: assets/terrarium.png
   features:
     - toc.integrate
+    - toc.follow
     - navigation.instant
     - navigation.instant.progress
     - navigation.tabs
     - navigation.sections # flat is better than nested
+    - navigation.expand
     - navigation.path
     - search.suggest
     - search.highlight
     - search.share
     - navigation.top
+    - navigation.tracking
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"

@@ -33,7 +33,7 @@ layout:
     style: "columns"
     useEqualHeights: true
     disableCollapse: true
-  Orchestration:
+  Orchestration & ETL/ELT:
     style: "columns"
     useEqualHeights: true
     disableCollapse: true

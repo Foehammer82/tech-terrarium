@@ -29,4 +29,4 @@ with DAG(
 
     run_dbt_model = BashOperator(task_id="run_dbt_model", bash_command="dbt run")
 
-    # TODO: add a task to run the datahub CLI DBT metadata ingestion after (and maybe before) the DBT run
+    # TODO: add a task to run the datahub CLI DBT metadata ingestion after the DBT run

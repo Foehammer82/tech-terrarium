@@ -53,7 +53,7 @@
           href: http://localhost:8084/
           description: NOT IMPLEMENTED YET
 
-- Orchestration:
+- Orchestration & ETL/ELT:
     - Airflow:
         icon: /images/airflow_icon.png
         description: "un/pw: airflow/airflow"
