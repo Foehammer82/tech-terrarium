@@ -43,7 +43,7 @@ graph LR
     T[MlFlow] -->|Manages Lifecycle for| U(Model)
     U -->|Sends Audit Data To| B
     F[MongoDB Sink Connector] -->|Streams Data Into| I
-    B-->|Streams Data To| F
+    B -->|Streams Data To| F
     Q[DataHub] -->|Tracks metadata of| I[MongoDB]
     Q -->|Tracks metadata of| H
     Q -->|Tracks metadata of| O[Airflow]
@@ -73,32 +73,35 @@ graph LR
 - [ ] implement a DBT project to be orchestrated by airflow that does some operations on data within postgres
     - have it both generate and operate on data that it creates and uses and have it operate on datagen data being
       produced from kafka
-- [ ] setup example python documentation examples to demonstrate interactions with kafka
+- [ ] setup example python documentation examples to demonstrate interactions with the different services in the
+  terrarium
 - [ ] build out the airflow instance with DAG's that perform scheduled operations on the rest of the services in the
   terrarium
-- [ ] set up a Spark server and explore that more
-    - follow the quick start guide to get a feel for it and operate on local files (testing parquet, csv, json, avro,
-      etc.)
-    - see about setting up apache iceberg locally and having Spark operate on it.
 - [ ] implement openmetadata with the same setup as datahub
 - [ ] create some endpoints in the FastAPI app that query topics using KSQL
 - [ ] deploy a model using MLFlow and serve basic features to it from feast
     - deploy the model as a FastAPI app, and/or as an RPC service, that the main FastAPI app can interact with
-- [ ] get an example built on top of the fastapi app that uses [arq](https://arq-docs.helpmanual.io/) for RPC to show
-  another way besides FastAPI to interact between apps. though have it in the FastAPI app so we can use the Swagger UI
-  to trigger the RPC calls.
-- [ ] look into getting examples for [FastUI](https://github.com/pydantic/FastUI) since it uses React and FastAPI to
-  build front ends
+- [ ] explore using [arq](https://arq-docs.helpmanual.io/) for RPC
+    - thinking of having the fastapi app be able to interact with another application (i.e. a model) using RPC with arq
 
 ## Long Term
 
 - [ ] configure all exposed services to run through a Traefik load balancer
     - this would be a good exercise in setting up a reverse proxy and load balancer for the terrarium
+- [ ] set up a Spark server and explore that more
+    - follow the quick start guide to get a feel for it and operate on local files (testing parquet, csv, json, avro,
+      etc.)
+    - see about setting up apache iceberg locally and having Spark operate on it.
 - [ ] configure to run everything on kubernetes with helm. the goal is to see if the whole stack can be deployed on 3
   raspberry pi's using k3s.
     - write docs and instructions on setting up the hardware
     - write docs and instructions on setting up the k3s cluster
     - write docs and instructions for deploying the stack on the cluster
+
+## Projects to Keep an Eye On
+
+- [FastUI](https://github.com/pydantic/FastUI): A new way to build web application user interfaces defined by
+  declarative Python code... [read more about it here](https://docs.pydantic.dev/fastui/#the-principle)
 
 ## Credits
 
