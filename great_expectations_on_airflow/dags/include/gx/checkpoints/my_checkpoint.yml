@@ -1,0 +1,26 @@
+name: my_checkpoint
+config_version: 1.0
+template_name:
+module_name: great_expectations.checkpoint
+class_name: Checkpoint
+run_name_template:
+expectation_suite_name:
+batch_request: {}
+action_list:
+  - name: datahub_action
+    action:
+      module_name: datahub.integrations.great_expectations.action
+      class_name: DataHubValidationAction
+      server_url: http://localhost:8089
+evaluation_parameters: {}
+runtime_configuration: {}
+validations:
+  - batch_request:
+      datasource_name: terrarium_postgres
+      data_asset_name: my_pet_table_asset
+      options: {}
+      batch_slice:
+    expectation_suite_name: my_suite
+profilers: []
+ge_cloud_id:
+expectation_suite_ge_cloud_id:
