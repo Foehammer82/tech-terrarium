@@ -6,25 +6,19 @@ nav:
   - Home: README.md
   - Getting Started: getting_started.md
   - Services:
-      - Data Catalog:
-          - services/datahub.md
-          - services/openmetadata.md
-          - services/alternative_data_catalogs.md
-      - Data Store:
-          - services/kafka.md
-          - services/postgres.md
-          - services/mongodb.md
-          - services/spark.md
-      - Application Framework:
-          - services/fastapi_app.md
-      - Orchestration & ETL/ELT:
-          - services/airflow.md
-          - services/dbt.md
-      - Machine Learning:
-          - services/feast.md
-          - services/mlflow.md
-      - BI & Analytics:
-          - services/metabase.md
+      - services/overview.md
+      - services/datahub.md
+      - services/kafka.md
+      - services/postgres.md
+      - services/mongodb.md
+      - services/spark.md
+      - services/fastapi_app.md
+      - services/airflow.md
+      - services/dbt.md
+      - services/feast.md
+      - services/mlflow.md
+      - services/metabase.md
+      - services/great_expectations.md
       - services/scrubbed_services.md
       - ... | services/*
   - ... | examples/*
