@@ -1,0 +1,72 @@
+services:
+  ge-webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    command: webserver
+    hostname: "airflow-webserver"
+    user: "50000:0"
+    ports:
+      - "8080:8080"
+    volumes:
+      - airflow-data:/opt/airflow
+      - ./dags:/opt/airflow/dags
+      - ./plugins:/opt/airflow/plugins
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:8080/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - airflow
+      - terrarium
+    depends_on:
+      - init
+
+  ge-scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    command: scheduler
+    volumes:
+      - airflow-data:/opt/airflow
+      - ./dags:/opt/airflow/dags
+      - ./plugins:/opt/airflow/plugins
+    user: "50000:0"
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:8974/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - airflow
+      - terrarium
+    depends_on:
+      - init
+
+  init:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: /bin/bash
+    command: /init.sh
+    restart: no
+    volumes:
+      - airflow-data:/opt/airflow
+      - ./dags:/opt/airflow/dags
+      - ./plugins:/opt/airflow/plugins
+    user: "50000:0"
+    networks:
+      - airflow
+
+volumes:
+  airflow-data:
+
+networks:
+  airflow:
+  terrarium:
+    name: terrarium

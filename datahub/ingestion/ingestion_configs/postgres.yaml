@@ -2,9 +2,13 @@ source:
   type: "postgres"
   config:
     host_port: postgres:5432
-    database: datagen
     username: postgres
     password: password
+    incremental_lineage: true
+    classification:
+      enabled: true
+    profiling:
+      enabled: true
 
 sink:
   type: "datahub-rest"

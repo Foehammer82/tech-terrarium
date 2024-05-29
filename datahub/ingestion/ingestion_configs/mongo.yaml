@@ -1,12 +1,12 @@
 source:
-  type: "postgres"
+  type: "mongodb"
   config:
     connect_uri: "mongodb://mongo:27017"
 
     # Credentials
     username: admin
     password: password
-    authMechanism: "DEFAULT"
+#    authMechanism: "DEFAULT"
 
     # Options
     enableSchemaInference: True
