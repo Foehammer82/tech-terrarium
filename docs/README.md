@@ -10,8 +10,17 @@
 **Source Code**:
 <a href="https://github.com/Foehammer82/tech-terrarium" target="_blank">https://github.com/Foehammer82/tech-terrarium</a>
 
-The Tech-Terrarium is a compact, hands-on tech stack simulation for learning and development. It features Python
-applications for quick deployment, but they can be re-written in other languages.
+The Tech-Terrarium project is a compact hands-on tech stack simulation for learning and development. It comprises
+a full stack of interconnected services that are commonly used in Data Engineering and Software Engineering projects.
+Each service is set up to be deployed on docker using docker-compose. You will find each directory in this repo
+containing a docker-compose.yaml file that will start the given service and its dependencies.
+
+The Terrarium is designed such that each service can be run independently, though they also work in concert with
+each-other. For example, you can start the kafka service which will start a broker, schema registry, ksqldb server,
+an admin ui, and a few connectors. Two are configured to connect to the Terrarium's PostgreSQL and MongoDB services,
+while a third is designed to ingest dummy data from a data generator. So you can start just Kafka and see how it works
+and even develop against it. and you can start up the Postgres instance and see the kafka connector start sending data
+to Postgres. The diagram below illustrates the services in the Terrarium and how they interact with each other.
 
 ## Motivation
 
@@ -81,11 +90,12 @@ graph LR
 - [ ] create some endpoints in the FastAPI app that query topics using KSQL
 - [ ] deploy a model using MLFlow and serve basic features to it from feast
     - deploy the model as a FastAPI app, and/or as an RPC service, that the main FastAPI app can interact with
+
+## Long Term Goals
+
 - [ ] explore using [arq](https://arq-docs.helpmanual.io/) for RPC
     - thinking of having the fastapi app be able to interact with another application (i.e. a model) using RPC with arq
-
-## Long Term
-
+    - or look at other options (celery, apscheduler, etc.) to get an example together for developing distributed apps.
 - [ ] configure all exposed services to run through a Traefik load balancer
     - this would be a good exercise in setting up a reverse proxy and load balancer for the terrarium
 - [ ] set up a Spark server and explore that more
