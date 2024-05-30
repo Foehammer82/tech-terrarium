@@ -1,4 +1,4 @@
-# Kafka
+# [Kafka](https://foehammer82.github.io/tech-terrarium/services/kafka/)
 
 > TODO: link to this service documentation here
 

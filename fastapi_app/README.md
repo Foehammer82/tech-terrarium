@@ -1,4 +1,4 @@
-# FastAPI Application
+# [FastAPI Application](https://foehammer82.github.io/tech-terrarium/services/fastapi_app/)
 
 ## Brainstorming
 
