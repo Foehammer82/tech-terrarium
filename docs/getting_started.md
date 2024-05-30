@@ -17,7 +17,6 @@ You will need to install:
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Python](https://www.python.org/downloads/) (recommend 3.11)
 - [Poetry](https://python-poetry.org/docs/)
-- [Make](https://www.gnu.org/software/make/)
 
 ### Setup Python Environment
 
@@ -37,43 +36,23 @@ You will need to install:
 
 ### First Steps
 
-1. Start the `admin` services
+> TODO: build up the CLI app and then reference accessing it here
 
-    ```bash
-    make start-admin
-    ```
+information about all terrarium-admin CLI commands can be accessed by running:
+
+```bash
+poetry run admin --help
+```
+
+1. Start the `admin` services
 2. once that the services are up, open your browser and navigate to [http://localhost](http://localhost). you'll be
    greeted with the Terrarium homepage that shows all the services available to you. though only the admin services are
    running at this point.
 
 3. Start the services you'd like to use/explore/observe
-
-    ```bash
-    make start-kafka
-    make start-postgres
-    make start-mongo
-    make start-metabase
-    make start-datahub
-    make start-airflow
-    make start-dbt
-    make start-mlflow
-    make start-feast
-    make start-spark
-    make start-openmetadata
-    make start-fastapi
-    ```
 4. And that's it! you're ready to start exploring the Terrarium.
 5. When you are done, you can stop all the services with:
-
-    ```bash
-    make stop-all
-    ```
-
 6. To clean everything up after you've shut down the services, you can run:
-
-    ```bash
-    make clean
-    ```
 
 ## Next Steps
 

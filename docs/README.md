@@ -102,8 +102,3 @@ graph LR
 
 - [FastUI](https://github.com/pydantic/FastUI): A new way to build web application user interfaces defined by
   declarative Python code... [read more about it here](https://docs.pydantic.dev/fastui/#the-principle)
-
-## Credits
-
-- Terrarium Icon: <a href="https://www.flaticon.com/free-icons/terrarium" title="terrarium icons">Terrarium icons
-  created by Freepik - Flaticon</a>
