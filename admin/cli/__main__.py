@@ -21,6 +21,7 @@ def start(service: str):
 
 @app.command()
 def docs():
+    """Opens the Tech-Terrarium documentation in your browser."""
     typer.launch("https://foehammer82.github.io/tech-terrarium/")
 
 
