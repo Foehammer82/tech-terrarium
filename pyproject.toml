@@ -15,7 +15,7 @@ terrarium = "cli.__main__:app"
 [tool.poetry.dependencies]
 python = "^3.11"
 confluent-kafka = { extras = ["avro"], version = "^2.4.0" }
-pydantic = "^2.7.1"
+pydantic = "^2.7.3"
 jupyter = "^1.0.0"
 pyarrow = { version = ">16", extras = ["avro"] }
 fastapi = "^0.111.0"
