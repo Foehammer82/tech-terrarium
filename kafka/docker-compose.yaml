@@ -1,24 +1,18 @@
-# TODO: see below:
-# https://github.com/redpanda-data/console
-# https://github.com/kafbat/kafka-ui
 # https://docs.confluent.io/platform/current/installation/docker/config-reference.html#kconnect-long-configuration
 # https://docs.ksqldb.io/en/latest/
 # https://zakir-hossain.medium.com/setting-up-jdbc-sink-connector-json-on-confluent-platform-locally-6f4a1fdfb8f3
 # https://developer.confluent.io/courses/kafka-connect/docker-containers/
-# get a portainer container running in this stack for easy management
 
 services:
   broker:
+    hostname: broker
     image: confluentinc/cp-kafka:7.6.1
     restart: on-failure
-    hostname: broker
-    container_name: broker
     ports:
       - "9092:9092"
       - "9101:9101"
     networks:
       - terrarium
-      - kafka
     volumes:
       - broker-data:/var/lib/kafka/data
     environment:
@@ -55,7 +49,6 @@ services:
       - "8081:8081"
     networks:
       - terrarium
-      - kafka
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
@@ -83,7 +76,6 @@ services:
     ports:
       - "8083:8083"
     networks:
-      - kafka
       - terrarium
     environment:
       CONNECT_BOOTSTRAP_SERVERS: 'broker:29092'
@@ -109,12 +101,11 @@ services:
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
 
   kafbat-ui:
-    # TODO: tie in datahub's kafka server to this UI
     image: ghcr.io/kafbat/kafka-ui:latest
+    restart: on-failure
     ports:
       - "9021:8080"
     networks:
-      - kafka
       - terrarium
     depends_on:
       - broker
@@ -130,6 +121,10 @@ services:
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: connect
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://connect:8083
       KAFKA_CLUSTERS_0_KSQLDBSERVER: http://ksqldb-server:8088
+      KAFKA_CLUSTERS_1_NAME: datahub
+      KAFKA_CLUSTERS_1_BOOTSTRAPSERVERS: "dh-broker:29092"
+      KAFKA_CLUSTERS_1_METRICS_PORT: 9101
+      KAFKA_CLUSTERS_1_SCHEMAREGISTRY: http://dh-schema-registry:8081
 
   ksqldb-server:
     image: confluentinc/cp-ksqldb-server:7.6.1
@@ -141,7 +136,7 @@ services:
     ports:
       - "8088:8088"
     networks:
-      - kafka
+      - terrarium
     environment:
       KSQL_CONFIG_DIR: "/etc/ksql"
       KSQL_BOOTSTRAP_SERVERS: "broker:29092"
@@ -164,7 +159,7 @@ services:
       - connect
       - ksqldb-server
     networks:
-      - kafka
+      - terrarium
     entrypoint: /bin/sh
     tty: true
 
@@ -178,7 +173,7 @@ services:
       - schema-registry
       - connect
     networks:
-      - kafka
+      - terrarium
     command: "bash -c 'echo Waiting for Kafka to be ready... && \
                        cub kafka-ready -b broker:29092 1 40 && \
                        echo Waiting for Confluent Schema Registry to be ready... && \
@@ -201,7 +196,7 @@ services:
     ports:
       - 8082:8082
     networks:
-      - kafka
+      - terrarium
     hostname: rest-proxy
     environment:
       KAFKA_REST_HOST_NAME: rest-proxy
@@ -216,4 +211,3 @@ volumes:
 networks:
   terrarium:
     name: terrarium
-  kafka:

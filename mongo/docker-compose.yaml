@@ -6,7 +6,6 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - mongo
       - terrarium
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
@@ -21,7 +20,6 @@ services:
     ports:
       - "8086:8081"
     networks:
-      - mongo
       - terrarium
     environment:
       ME_CONFIG_MONGODB_SERVER: mongo
@@ -37,6 +35,5 @@ volumes:
   mongo-data:
 
 networks:
-  mongo:
   terrarium:
     name: terrarium

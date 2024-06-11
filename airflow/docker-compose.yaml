@@ -20,7 +20,6 @@ services:
       retries: 5
       start_period: 30s
     networks:
-      - airflow
       - terrarium
     depends_on:
       - init
@@ -43,7 +42,6 @@ services:
       retries: 5
       start_period: 30s
     networks:
-      - airflow
       - terrarium
     depends_on:
       - init
@@ -61,12 +59,11 @@ services:
       - ./plugins:/opt/airflow/plugins
     user: "50000:0"
     networks:
-      - airflow
+      - terrarium
 
 volumes:
   airflow-data:
 
 networks:
-  airflow:
   terrarium:
     name: terrarium

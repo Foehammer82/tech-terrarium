@@ -34,7 +34,6 @@ services:
     volumes:
       - datahub-plugins:/etc/datahub/plugins
     networks:
-      - datahub
       - terrarium
 
   gms:
@@ -80,7 +79,6 @@ services:
     volumes:
       - datahub-plugins:/etc/datahub/plugins
     networks:
-      - datahub
       - terrarium
   
   upgrade:
@@ -117,7 +115,7 @@ services:
     labels:
       datahub_setup_job: true
     networks:
-      - datahub
+      - terrarium
   
   # ELASTICSEARCH
   elasticsearch:
@@ -143,7 +141,7 @@ services:
     volumes:
       - es-data:/usr/share/elasticsearch/data
     networks:
-      - datahub
+      - terrarium
   
   elasticsearch-setup:
     depends_on:
@@ -160,7 +158,7 @@ services:
     labels:
       datahub_setup_job: true
     networks:
-      - datahub
+      - terrarium
   
   # MYSQL
   mysql:
@@ -182,7 +180,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
-      - datahub
+      - terrarium
   
   mysql-setup:
     depends_on:
@@ -199,10 +197,12 @@ services:
     labels:
       datahub_setup_job: true
     networks:
-      - datahub
+      - terrarium
   
   # KAFKA
   dh-broker:
+    image: confluentinc/cp-kafka:7.6.1
+    hostname: dh-broker
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_NODE_ID: 1
@@ -219,22 +219,24 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_HEAP_OPTS: "-Xms256m -Xmx256m"
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka0 -Dcom.sun.management.jmxremote.rmi.port=9101
     healthcheck:
       interval: 1s
       retries: 5
       start_period: 60s
       test: nc -z dh-broker 9092
       timeout: 5s
-    hostname: dh-broker
-    image: confluentinc/cp-kafka:7.6.1
     ports:
       - "9093:9092"
     volumes:
       - broker:/var/lib/kafka/data/
     networks:
-      - datahub
+      - terrarium
   
   dh-schema-registry:
+    hostname: dh-schema-registry
+    image: confluentinc/cp-schema-registry:7.6.1
     depends_on:
       dh-broker:
         condition: service_healthy
@@ -248,13 +250,11 @@ services:
       start_period: 60s
       test: nc -z dh-schema-registry 8081
       timeout: 5s
-    hostname: dh-schema-registry
-    image: confluentinc/cp-schema-registry:7.6.1
     ports:
       - "8018:8081"
     networks:
-      - datahub
-  
+      - terrarium
+
   kafka-setup:
     depends_on:
       dh-broker:
@@ -262,16 +262,15 @@ services:
       dh-schema-registry:
         condition: service_healthy
     environment:
-      - DATAHUB_PRECREATE_TOPICS=false
+      - DATAHUB_PRECREATE_TOPICS=true
       - KAFKA_BOOTSTRAP_SERVER=dh-broker:29092
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - USE_CONFLUENT_SCHEMA_REGISTRY=TRUE
     hostname: kafka-setup
     image: acryldata/datahub-kafka-setup:head
     labels:
       datahub_setup_job: true
     networks:
-      - datahub
+      - terrarium
 
 volumes:
   broker:
@@ -280,6 +279,5 @@ volumes:
   datahub-plugins:
 
 networks:
-  datahub:
   terrarium:
     name: terrarium

@@ -6,7 +6,6 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - metabase
       - terrarium
     volumes:
       - ./metabase_data:/metabase-data
@@ -14,6 +13,5 @@ services:
       MB_DB_FILE: /metabase-data/metabase.db
 
 networks:
-  metabase:
   terrarium:
     name: terrarium

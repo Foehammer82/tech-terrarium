@@ -38,33 +38,35 @@ respectful and considerate when making comments or suggestions.
 
 ```mermaid
 graph LR
+    U -->|Sends Audit Data To| B
+    G[Feast] -->|Offline Feature Store| E
     A[FastAPI App] -->|Sends Audit Data To| B[Kafka]
+    G -->|Online Feature Store| V[Redis]
+    Q -->|Tracks metadata of| E
+    Q -->|Tracks metadata of| B
+    Q -->|Tracks metadata of| D
     B -->|Streams Data To| D[PostgreSQL Sink Connector]
     A -->|Interacts With| E
     D -->|Streams Data Into| E[PostgreSQL]
-    Q -->|Tracks metadata of| E
-    G[Feast] -->|Offline Feature Store| E
-    G -->|Online Feature Store| V[Redis]
-    H[Metabase] -->|BI Data Analytics Against| E
+    Q -->|Tracks metadata of| G
     U -->|Gets Features From| G
     A -->|Interacts With| U
     H -->|BI Data Analytics Against| I
     T[MlFlow] -->|Manages Lifecycle for| U(Model)
-    U -->|Sends Audit Data To| B
     F[MongoDB Sink Connector] -->|Streams Data Into| I
     B -->|Streams Data To| F
+    O -->|Performs Data Operations On| I
     Q[DataHub] -->|Tracks metadata of| I[MongoDB]
     Q -->|Tracks metadata of| H
     Q -->|Tracks metadata of| O[Airflow]
+    O -->|Publishes To| B
+    O -->|Performs Data Operations On| E
+    H[Metabase] -->|BI Data Analytics Against| E
     Q -->|Tracks metadata of| T
-    Q -->|Tracks metadata of| D
-    Q -->|Tracks metadata of| B
-    Q -->|Tracks metadata of| P[DBT]
-    Q -->|Tracks metadata of| G
-    Q -->|Tracks metadata of| A
     O -->|Orchestrates| P
+    Q -->|Tracks metadata of| P[DBT]
+    Q -->|Tracks metadata of| A
     P -->|Operates on| E
-
 ```
 
 ## MVP Roadmap

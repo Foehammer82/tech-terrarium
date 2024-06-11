@@ -13,6 +13,5 @@ services:
       PGID: 1001
 
 networks:
-  fastapi_app:
   terrarium:
     name: terrarium
