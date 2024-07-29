@@ -3384,13 +3384,13 @@ tests = ["pytest"]
 
 [[package]]
 name = "py-avro-schema"
-version = "3.7.1"
+version = "3.7.3"
 description = "Generate Apache Avro schemas for Python types including standard library data-classes and Pydantic data models."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "py_avro_schema-3.7.1-py3-none-any.whl", hash = "sha256:575f8a825e955ca48f6e2b7115a92ef2e07dbc9f49c784d0a8b2ffc7994e63fe"},
-    {file = "py_avro_schema-3.7.1.tar.gz", hash = "sha256:a2ecf48e7ae226ecc5626b113dd51b68e7615bb92544d74d553a256e835b106c"},
+    {file = "py_avro_schema-3.7.3-py3-none-any.whl", hash = "sha256:aedafe3a67551cb9f46daad337bc7749d904e4052432f0609774a146cd60562e"},
+    {file = "py_avro_schema-3.7.3.tar.gz", hash = "sha256:5757fb6daf0554d7c4b0518feee816635ed052369ca96d5ca70f13cce038c394"},
 ]
 
 [package.dependencies]
