@@ -2,7 +2,7 @@ apache-airflow-providers-postgres
 apache-airflow-providers-mongo
 apache-airflow-providers-apache-kafka
 
-acryl-datahub-airflow-plugin[plugin-v2]~=0.13.2.4
+acryl-datahub-airflow-plugin[plugin-v2]~=0.13.3.4
 airflow-provider-great-expectations
 great-expectations
 acryl-datahub[great-expectations]

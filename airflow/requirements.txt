@@ -9,4 +9,4 @@ airflow.providers.dbt
 Faker
 dbt-core~=1.8.1
 dbt-postgres~=1.8.1
-acryl-datahub-airflow-plugin[plugin-v2]~=0.13.2.4
+acryl-datahub-airflow-plugin[plugin-v2]~=0.13.3.4
